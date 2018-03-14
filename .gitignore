@@ -28,3 +28,12 @@ server/.env.production.local
 server/npm-debug.log*
 server/yarn-debug.log*
 server/yarn-error.log*
+client/node_modules/
+client/.idea/
+client/*.log
+client/build/
+client/dist/
+client/public/assets/
+client//coverage
+client//.nyc_output
+client/.DS_Store
