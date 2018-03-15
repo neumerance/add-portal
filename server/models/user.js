@@ -1,14 +1,38 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-
-const UserSchema = new Schema({ 
-  email: { 
-    type: String, 
-    require: [true, 'Email is required.'],
-    unique: true
-  }, 
-  password: String, 
-  role: { type: Number, require: [true, 'Role is not defined'] },  // 1 admin, 1 addpro, 1 viewer
-  created: { type: Date, default: Date.now } 
-});
-module.exports = mongoose.model('User', UserSchema);
+module.exports = (sequelize, DataTypes) => {
+  return sequelize.define('users', {
+    id: {
+      type: DataTypes.BIGINT,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: {
+        args: true,
+        msg: 'Email is already been taken'
+      },
+      isEmail: {
+        args: true,
+        msg: 'Email format is invalid'
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    role: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false
+    }
+  });
+}

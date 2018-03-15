@@ -10,7 +10,6 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 const User = require('./models/user'); // get our mongoose model
 let UsersController = require('./controllers/users_controller.js');
-UsersController = new UsersController();
 
 const users = [];
 const connections = [];
@@ -35,20 +34,23 @@ app.get('/', function(req, res){
 });
 
 // API ROUTES -------------------
-const apiRoutes = express.Router(); 
-// route to authenticate a user (POST http://localhost:8080/api/authenticate)
-apiRoutes.post('/authenticate', (req, res) => {
-  UsersController.authenticate(res, req, app);
-}); 
+const apiRoutes = express.Router();  
 // route to authenticate a user (POST http://localhost:8080/api/signup)
 apiRoutes.post('/signup', (req, res) => {
-  UsersController.signup(res, req);
+  new UsersController(res, req).signup();
 }); 
+// route to authenticate a user (POST http://localhost:8080/api/authenticate)
+apiRoutes.post('/authenticate', (req, res) => {
+  new UsersController(res, req, app).authenticate();
+});
 // route middleware to verify a token
-UsersController.verifyToken(app, apiRoutes);
+// all routes below this line is protected with auth token
+apiRoutes.use((req, res, next) => {
+  new UsersController(res, req, app, next).verifyToken();
+});
 // route to return all users (GET http://localhost:4000/api/users)
 apiRoutes.get('/users', function(req, res) {
-  UsersController.getAllUsers(res);
+  UsersController(res, req).index();
 });
 
 app.use('/api', apiRoutes);

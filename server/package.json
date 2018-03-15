@@ -14,7 +14,9 @@
     "jsonwebtoken": "^8.2.0",
     "mongoose": "^5.0.10",
     "morgan": "^1.9.0",
+    "mysql2": "^1.5.2",
     "pluralize": "^7.0.0",
+    "sequelize": "^4.36.1",
     "server": "^1.0.18",
     "socket.io": "^2.0.4"
   },
