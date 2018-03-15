@@ -1,4 +1,5 @@
 const express = require('express');
+var cors = require('cors');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
@@ -6,9 +7,6 @@ const pluralize = require('pluralize');
 const config = require('./config');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-const User = require('./models/user'); // get our mongoose model
 let UsersController = require('./controllers/users_controller.js');
 
 const users = [];
@@ -17,13 +15,18 @@ const connections = [];
 // =======================
 // configuration =========
 // =======================
-mongoose.connect(config.database); // connect to database
 app.set('superSecret', config.secret); // secret variable
 // use body parser so we can get info from POST and/or URL parameters
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // use morgan to log requests to the console
 app.use(morgan('dev'));
+// app.use(cors())
+// var corsOptions = {
+//   origin: '*',
+//   optionsSuccessStatus: 200
+// }
+app.use(cors());
 
 // =======================
 // routes ================
@@ -50,7 +53,7 @@ apiRoutes.use((req, res, next) => {
 });
 // route to return all users (GET http://localhost:4000/api/users)
 apiRoutes.get('/users', function(req, res) {
-  UsersController(res, req).index();
+  new UsersController(res, req).index();
 });
 
 app.use('/api', apiRoutes);

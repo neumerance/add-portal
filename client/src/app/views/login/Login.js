@@ -204,7 +204,7 @@ class Login extends PureComponent<Props, State> {
     } = this.state;
 
     const userLogin = {
-      login:    email,
+      email:    email,
       password: password
     };
 
@@ -231,40 +231,16 @@ class Login extends PureComponent<Props, State> {
     }
   }
 
-  logUser = async (
-    login: string= '',
-    password: string= ''
-  ) => {
-    const __SOME_LOGIN_API__ = 'login';
-    const url         = `${getLocationOrigin()}/${__SOME_LOGIN_API__}`;
+  logUser = async (userLogin) => {
+    const __SOME_LOGIN_API__ = 'api/authenticate';
+    const url         = `${appConfig.serverHost}/${__SOME_LOGIN_API__}`;
     const method      = 'post';
     const headers     = {};
-    const options     = {
-      credentials: 'same-origin',
-      data: {
-        login,
-        password
-      }
-    };
-
-    if (appConfig.DEV_MODE) {
-      return new Promise(
-        resolve => setTimeout(resolve({ data: userInfoMock }), 3000)
-      );
-    }
-
     try {
       const response = await axios.request({
         method,
         url,
-        withCredentials: true,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Acces-Control-Allow-Origin': '*',
-          ...headers
-        },
-        ...options
+        data: userLogin
       });
 
       return Promise.resolve(response);

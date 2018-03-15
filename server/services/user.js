@@ -13,7 +13,9 @@ class UserService {
   }
 
   index() {
-    db.user.findAll().then((response) => {
+    db.users.findAll({
+      attributes: ['id', 'email', 'role', 'createdAt', 'updatedAt']
+    }).then((response) => {
       this.res.json({ success: true, data: response });
     }).catch((error) => {
       this.respondWithException(error);
@@ -34,6 +36,7 @@ class UserService {
 
   show() {
     db.users.findOne({
+      attributes: ['id', 'email', 'role', 'createdAt', 'updatedAt'],
       where: {
         id: this.req.body.id
       }
@@ -74,6 +77,7 @@ class UserService {
           this.res.json({
             success: true,
             message: 'Enjoy your token!',
+            user: { id: user.id, email: user.email },
             token: token
           });
         }   

@@ -13,8 +13,8 @@ import PrivateRoute from '../components/privateRoute/PrivateRoute';
 const MainRoutes = () => {
   return (
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
+      <PrivateRoute exact path="/" component={Home} />
+      <PrivateRoute path="/about" component={About} />
       {/* private views: need user to be authenticated */}
       <PrivateRoute path="/protected" component={Protected} />
     </Switch>
