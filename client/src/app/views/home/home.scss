@@ -13,10 +13,10 @@ body {
 }
 
 .ch {
-  background: rgba(255, 255, 255, 0.3);
   padding: 10px;
-  border: 1px solid #fff;
-  border-left: 10px solid #fff;
+  border: 1px solid #38ADD8;
+  border-left: 10px solid #38ADD8;
+  background: #FFFFFF;
   margin-top: 4px;
   cursor: pointer;
   -webkit-transition : border 500ms ease-out;
@@ -25,28 +25,28 @@ body {
   transition : border 500ms ease-out;
 
   &:hover {
-    border: 1px solid #38ADD8;
-    border-left: 10px solid #38ADD8;
+    border: 1px solid #333;
+    border-left: 10px solid #333;
     background: #FFFFFF;
 
     .chIcon {
-      color: #38ADD8;
+      color: #333;
     }
 
     .chContent {
 
       .chTitle {
-        color: #38ADD8;
+        color: #333;
       }
 
       .chSub {
-        color: #38ADD8;
+        color: #333;
       }
     }
   }
 
   .chIcon {
-    color: #FFFFFF;
+    color: #38ADD8;
     display: inline-block;
     padding: 0 20px;
     -webkit-transition : color 500ms ease-out;
@@ -61,7 +61,7 @@ body {
     .chTitle {
       margin: 0;
       padding: 0;
-      color: #fff;
+      color: #38ADD8;
       -webkit-transition : color 500ms ease-out;
       -moz-transition : color 500ms ease-out;
       -o-transition : color 500ms ease-out;
@@ -71,7 +71,7 @@ body {
     .chSub {
       margin: 0;
       padding: 0;
-      color: #fff;
+      color: #38ADD8;
       -webkit-transition : color 500ms ease-out;
       -moz-transition : color 500ms ease-out;
       -o-transition : color 500ms ease-out;
@@ -81,22 +81,22 @@ body {
 }
 
 .chActive {
-  border: 1px solid #38ADD8;
-  border-left: 10px solid #38ADD8;
+  border: 1px solid #333;
+  border-left: 10px solid #333;
   background: #FFFFFF;
 
   .chIcon {
-    color: #38ADD8;
+    color: #333;
   }
 
   .chContent {
 
     .chTitle {
-      color: #38ADD8;
+      color: #333;
     }
 
     .chSub {
-      color: #38ADD8;
+      color: #333;
     }
   }
 }

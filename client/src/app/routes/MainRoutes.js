@@ -10,11 +10,11 @@ import About        from '../views/about/About';
 import Protected    from '../views/protected/Protected';
 import PrivateRoute from '../components/privateRoute/PrivateRoute';
 
-const MainRoutes = () => {
+const MainRoutes = (socket) => {
   return (
     <Switch>
-      <PrivateRoute exact path="/" component={Home} />
-      <PrivateRoute path="/about" component={About} />
+      <PrivateRoute exact path="/" socket={socket} component={Home} />
+      <PrivateRoute path="/about" socket={socket} component={About} />
       {/* private views: need user to be authenticated */}
       <PrivateRoute path="/protected" component={Protected} />
     </Switch>

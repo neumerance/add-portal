@@ -131,6 +131,7 @@
     "jquery": "^3.2.1",
     "js-base64": "^2.3.2",
     "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.5",
     "moment": "^2.19.2",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
@@ -141,6 +142,8 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-tap-event-plugin": "^3.0.2",
-    "smoothscroll-polyfill": "^0.4.0"
+    "react-toggle-button": "^2.2.0",
+    "smoothscroll-polyfill": "^0.4.0",
+    "socket.io-client": "^2.0.4"
   }
 }

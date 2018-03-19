@@ -36,11 +36,14 @@ class PrivateRoute extends Component {
       <Route
         {...rest}
         render={
-          props => (
-            !isTokenExpired && isUserAuthenticated
-              ? <InnerComponent {...props} />
-              : <Redirect to={{ pathname: '/login', state: { from: location } }} />
-          )
+          (props) => {
+            props.socket = this.props.socket;
+            return (
+              !isTokenExpired && isUserAuthenticated
+                ? <InnerComponent {...props} />
+                : <Redirect to={{ pathname: '/login', state: { from: location } }} />
+            )
+          }
         }
       />
     );

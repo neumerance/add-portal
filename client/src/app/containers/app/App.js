@@ -1,19 +1,21 @@
 // @flow weak
 
-import React, {
-  Component
-}                         from 'react';
-import { withRouter }     from 'react-router';
-import {
-  NavigationBar,
-  BackToTop
-}                         from '../../components';
-import navigationModel    from '../../config/navigation.json';
-import MainRoutes         from '../../routes/MainRoutes';
-import styles             from './app.scss';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+import { NavigationBar, BackToTop } from '../../components';
+import socket from 'socket.io-client';
+import navigationModel from '../../config/navigation.json';
+import MainRoutes from '../../routes/MainRoutes';
+import { appConfig } from '../../config/appConfig';
+import styles from './app.scss';
 
 class App extends Component {
   state = { navModel: navigationModel };
+
+  constructor(props) {
+    super(props);
+    this.socket = socket(appConfig.serverHost);
+  }
 
   render() {
     const { navModel } = this.state;
@@ -21,7 +23,7 @@ class App extends Component {
     return (
       <div id="appContainer">
         <div className="container-fluid">
-          <MainRoutes />
+          <MainRoutes socket={this.socket} />
         </div>
         <BackToTop
           minScrollY={40}

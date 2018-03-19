@@ -28,11 +28,35 @@
 :global .m-t-10 {
   margin-top: 10px;
 }
+:global .m-r-5 {
+  margin-right: 5px;
+}
 
 :global .p-0 {
   padding: 0px !important;
 }
+:global .p-r-0 {
+  padding-right: 0px;
+}
+:global .p-l-0 {
+  padding-left: 0px;
+}
 
 :global .m-t-10-percent {
   margin-top: 10%;
+}
+
+:global .btn {
+  border-radius: 0px !important;
+}
+
+a {
+  &:hover {
+    color: #333;
+    text-decoration: none;
+  }
+}
+
+:global .inline-display {
+  display: inline-block;
 }
