@@ -20,12 +20,6 @@ class App extends Component {
 
     return (
       <div id="appContainer">
-        <NavigationBar
-          brand={navModel.brand}
-          navModel={navModel}
-          handleLeftNavItemClick={this.handleLeftNavItemClick}
-          handleRightNavItemClick={this.handleRightNavItemClick}
-        />
         <div className="container-fluid">
           <MainRoutes />
         </div>

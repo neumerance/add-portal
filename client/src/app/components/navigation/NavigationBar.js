@@ -34,7 +34,7 @@ const NavigationBar = ({
               />
             }
           </ul>
-          <ul className="nav navbar-nav navbar-right">
+          <ul className="nav navbar-nav navbar-right m-0 p-0">
             {
               <RightNav
                 rightLinks={navModel.rightLinks}

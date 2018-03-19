@@ -1,14 +1,102 @@
-/*  IPORTANT: Comment this way  and not JS way "//" */
+html, body {
+  height: 100%;
+}
 
+body {
+  background: url('../../../../public/assets/images/skybg-min.jpg') no-repeat top center;
+  background-size: 100%;
+}
 
-/*  better naming with camelCase than kebab-case */
+:global .row {
+  padding: 0;
+  margin: 0;
+}
 
-.homeInfo {
-  .mainTitle {
-    color: #222 !important;
-    font-weight: 800;
+.ch {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 10px;
+  border: 1px solid #fff;
+  border-left: 10px solid #fff;
+  margin-top: 4px;
+  cursor: pointer;
+  -webkit-transition : border 500ms ease-out;
+  -moz-transition : border 500ms ease-out;
+  -o-transition : border 500ms ease-out;
+  transition : border 500ms ease-out;
+
+  &:hover {
+    border: 1px solid #38ADD8;
+    border-left: 10px solid #38ADD8;
+    background: #FFFFFF;
+
+    .chIcon {
+      color: #38ADD8;
+    }
+
+    .chContent {
+
+      .chTitle {
+        color: #38ADD8;
+      }
+
+      .chSub {
+        color: #38ADD8;
+      }
+    }
   }
-  .lightNote {
-    font-size: 0.7em;
+
+  .chIcon {
+    color: #FFFFFF;
+    display: inline-block;
+    padding: 0 20px;
+    -webkit-transition : color 500ms ease-out;
+    -moz-transition : color 500ms ease-out;
+    -o-transition : color 500ms ease-out;
+    transition : color 500ms ease-out;
+  }
+
+  .chContent {
+    display: inline-block;
+
+    .chTitle {
+      margin: 0;
+      padding: 0;
+      color: #fff;
+      -webkit-transition : color 500ms ease-out;
+      -moz-transition : color 500ms ease-out;
+      -o-transition : color 500ms ease-out;
+      transition : color 500ms ease-out;
+    }
+
+    .chSub {
+      margin: 0;
+      padding: 0;
+      color: #fff;
+      -webkit-transition : color 500ms ease-out;
+      -moz-transition : color 500ms ease-out;
+      -o-transition : color 500ms ease-out;
+      transition : color 500ms ease-out;
+    }
+  }
+}
+
+.chActive {
+  border: 1px solid #38ADD8;
+  border-left: 10px solid #38ADD8;
+  background: #FFFFFF;
+
+  .chIcon {
+    color: #38ADD8;
+  }
+
+  .chContent {
+
+    .chTitle {
+      color: #38ADD8;
+    }
+
+    .chSub {
+      color: #38ADD8;
+    }
   }
 }
