@@ -1,12 +1,10 @@
 const config = {};
 config.port = 4000;
-config.serviceId = '15017';
-config.serviceKey = '5a952db1ccadd2880c58c9d5';
-config.serviceEndpoint = 'http://52.15.169.158:3000/';
+config.serviceId = '17266';
+config.serviceKey = '5aae8f1b0e7108696f898060';
+config.serviceEndpoint = 'http://192.168.0.105:3000/';
 config.mysqlHost = 'localhost';
 config.mysqlUsername = 'root';
 config.mysqlPassword = 'abc';
 config.mysqlDatabase = 'addserver';
-config.secret = 'ilovescotchyscotch';
-config.database = 'mongodb://localhost:27017/add-portal';
 module.exports = config;

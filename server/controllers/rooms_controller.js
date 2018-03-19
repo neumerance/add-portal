@@ -9,8 +9,7 @@ const nullFunc = () => {}
 
 class RoomsController {
   constructor() {
-    this.api = N.API;
-    this.api.init(config.serviceId, config.serviceKey, config.serviceEndpoint);
+    N.API.init(config.serviceId, config.serviceKey, config.serviceEndpoint);
   }
 
   joinRoom() {
@@ -20,13 +19,14 @@ class RoomsController {
   }
   
   getRooms(callback = nullFunc) {
-    this.api.getRooms(
-      (roomList) => {
-        const rooms = JSON.parse(roomList);
-        callback(rooms);
-      }, 
-      errorCallback('Unable to get all rooms')
-    );
+    console.log('N.API', N.API);
+    N.API.getRooms(function(roomList) {
+      var rooms = JSON.parse(roomList);
+      for(var i in rooms) {
+        console.log('Room ', i, ':', rooms[i].name);
+      }
+      callback(rooms);
+    }, (error) => { errorCallback(`Unable to get all rooms: ${error}`) });
   }
 
   getRoom(roomId) {    
@@ -38,10 +38,8 @@ class RoomsController {
         callback(room);
         console.log(`Room ${params.name} with id ${room._id} has been created`);
       }, 
-      errorCallback(
-        `Failed to create room: ${JSON.stringify(params)}`
-      ), 
-      { p2p: params.isP2p, data: { description: params.description } }
+      () => { errorCallback(`Failed to create room: ${JSON.stringify(params)}`) }, 
+      { p2p: params.isP2p, data: { description: params.room_description } }
     );
   }
 

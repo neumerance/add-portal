@@ -8,6 +8,7 @@ const config = require('./config');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 let UsersController = require('./controllers/users_controller.js');
+let RoomsController = require('./controllers/rooms_controller');
 
 const users = [];
 const connections = [];
@@ -52,8 +53,17 @@ apiRoutes.use((req, res, next) => {
   new UsersController(res, req, app, next).verifyToken();
 });
 // route to return all users (GET http://localhost:4000/api/users)
-apiRoutes.get('/users', function(req, res) {
+apiRoutes.get('/users', (req, res) => {
   new UsersController(res, req).index();
+});
+
+RoomsController = new RoomsController();
+apiRoutes.post('/rooms/create', (req, res) => {
+  RoomsController.createRoom(req.body.room, () => {
+    RoomsController.getRooms((rooms) => {
+      io.sockets.emit('room#lists', rooms);
+    });
+  });
 });
 
 app.use('/api', apiRoutes);
@@ -74,5 +84,11 @@ io.sockets.on('connection', (socket) => {
   socket.on('disconnect', () => {
     connections.splice(connections.indexOf(socket), 1);
     console.log('Disconnected: ', `${connections.length} ${pluralize('client', connections.length)} connected.`);
+  });
+
+  socket.on('room#getLists', () => {
+    RoomsController.getRooms((rooms) => {
+      io.sockets.emit('room#lists', rooms);
+    });
   });
 });

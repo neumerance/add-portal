@@ -17,7 +17,7 @@ class CreateRoomModal extends React.Component {
     this.state = {
       channel: {
         name: '',
-        channel_description: '',
+        room_description: '',
         isP2p: false
       }
     }
@@ -27,6 +27,9 @@ class CreateRoomModal extends React.Component {
     const state = this.state;
     _.set(state, field, value);
     this.setState({ ...state });
+  }
+
+  handleCreateChannel() {
   }
 
   render() {
@@ -49,9 +52,9 @@ class CreateRoomModal extends React.Component {
             <ControlLabel>Channel description</ControlLabel>
             <FormControl
               componentClass="textarea"
-              value={this.state.channel.channel_description}
+              value={this.state.channel.room_description}
               placeholder="Enter channel description"
-              onChange={(e) => { this.handleInput(e.target.value, 'channel.channel_description') }}
+              onChange={(e) => { this.handleInput(e.target.value, 'channel.room_description') }}
             />
           </FormGroup>
           <FormGroup controlId="channelP2pOption">
