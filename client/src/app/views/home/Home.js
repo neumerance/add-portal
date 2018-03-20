@@ -46,14 +46,16 @@ class Home extends PureComponent {
                 </Col>
               </Row>
               {this.renderChannels()}
-              <Row className="m-t-4">
-                <Col className="p-r-0" md={6} xs={6}>
+              <div className="m-t-4">
+                <Col className="p-0" md={6} xs={6}>
                   <button className="btn btn-info btn-sm btn-block">JOIN</button>
                 </Col>
-                <Col className="p-l-0" md={6} xs={6}>
-                  <button className="btn btn-default btn-sm btn-block">LOG OUT</button>
+                <Col className="p-0" md={6} xs={6}>
+                  <Link to="/login">
+                   <button className="btn btn-default btn-sm btn-block">LOG OUT</button>
+                  </Link>
                 </Col>
-              </Row>
+              </div>
             </Col>
           </Row>
         </div>
@@ -76,7 +78,7 @@ class Home extends PureComponent {
     return this.state.rooms.map((room, key) => {
       return(
         <div key={key} className={`${styles.ch} ${room._id === this.state.roomSelected ? styles.chActive : null}`}>
-          { room.name ? <div className={styles.chIcon}><i className="fa fa-users fa-2x"></i></div> : null }
+          { room.name ? <div className={styles.chIcon}><i className="fa fa-users"></i></div> : null }
           <div className={styles.chContent}>
             { room.name ? <h4 className={styles.chTitle}>{room.name}</h4> : null }
             <h5 className={styles.chSub}>{room.room_description}</h5>

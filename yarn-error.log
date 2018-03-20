@@ -1,0 +1,32 @@
+Arguments: 
+  /home/jonjon/.nvm/versions/node/v8.9.4/bin/node /home/jonjon/.nvm/versions/node/v8.9.4/bin/yarn start
+
+PATH: 
+  /home/jonjon/.rvm/gems/ruby-2.4.1/bin:/home/jonjon/.rvm/gems/ruby-2.4.1@global/bin:/home/jonjon/.rvm/rubies/ruby-2.4.1/bin:/home/jonjon/bin:/home/jonjon/.local/bin:/home/jonjon/.nvm/versions/node/v8.9.4/bin:/home/jonjon/bin:/home/jonjon/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/home/jonjon/.rvm/bin:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/home/jonjon/.rvm/bin:/home/jonjon/.rvm/bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  8.9.4
+
+Platform: 
+  linux x64
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Couldn't find a package.json file in "/home/jonjon/projects/add-portal"
+      at new MessageError (/home/jonjon/.nvm/versions/node/v8.9.4/lib/node_modules/yarn/lib/cli.js:186:110)
+      at /home/jonjon/.nvm/versions/node/v8.9.4/lib/node_modules/yarn/lib/cli.js:40048:15
+      at Generator.next (<anonymous>)
+      at step (/home/jonjon/.nvm/versions/node/v8.9.4/lib/node_modules/yarn/lib/cli.js:98:30)
+      at /home/jonjon/.nvm/versions/node/v8.9.4/lib/node_modules/yarn/lib/cli.js:109:13
+      at <anonymous>

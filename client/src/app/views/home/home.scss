@@ -1,7 +1,3 @@
-html, body {
-  height: 100%;
-}
-
 body {
   background: url('../../../../public/assets/images/skybg-min.jpg') no-repeat top center;
   background-size: 100%;
@@ -42,17 +38,33 @@ body {
       .chSub {
         color: #333;
       }
+
+      .chInput {
+        background-color: #FFFFFF !important;
+        color: #333333;
+        border: 1px solid #333333;
+      }
     }
+  }
+
+  .chInput {
+    width: 100%;
+    border-radius: 0px !important;
+    background-color: #FFFFFF !important;
+    color: #38ADD8;
+    border: 1px solid #38ADD8;
   }
 
   .chIcon {
     color: #38ADD8;
     display: inline-block;
-    padding: 0 20px;
+    text-align: center;
     -webkit-transition : color 500ms ease-out;
     -moz-transition : color 500ms ease-out;
     -o-transition : color 500ms ease-out;
     transition : color 500ms ease-out;
+    width: 60px;
+    font-size: 20px;
   }
 
   .chContent {

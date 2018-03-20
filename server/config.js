@@ -1,10 +1,11 @@
 const config = {};
 config.port = 4000;
-config.serviceId = '17266';
-config.serviceKey = '5aae8f1b0e7108696f898060';
-config.serviceEndpoint = 'http://192.168.0.105:3000/';
+config.serviceId = '10284';
+config.serviceKey = '5ab074062ce0a7ec1955ff8e';
+config.serviceEndpoint = 'http://add.server.com:3000/';
 config.mysqlHost = 'localhost';
 config.mysqlUsername = 'root';
 config.mysqlPassword = 'abc';
 config.mysqlDatabase = 'addserver';
+config.secret = '81ce0eabbee722ae74ca2eac4d4fe4c3623b2e0ed5d8de38f6ba94eda4f6e97e4a657587003db01e3e17013a107293ad18d07ff023ebf3bec6d4f91ffe80cb04';
 module.exports = config;

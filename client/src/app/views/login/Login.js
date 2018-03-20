@@ -11,7 +11,7 @@ import {
   Col,
   Button
 }                         from 'react-bootstrap';
-import styles             from './login.scss';
+import styles             from '../home/home.scss';
 import auth               from '../../services/auth';
 import { appConfig }      from '../../config/appConfig';
 import getLocationOrigin  from '../../services/utils/getLocationOrigin';
@@ -60,107 +60,57 @@ class Login extends PureComponent<Props, State> {
     } = this.state;
 
     return (
-      <div className="content">
+      <div className="m-t-10-percent">
         <Row>
-          <Col
-            md={4}
-            mdOffset={4}
-            xs={10}
-            xsOffset={1}
-          >
-            <form
-              className="form-horizontal"
-              noValidate
-            >
-              <fieldset>
-                <legend>
-                  Login
-                </legend>
-
-                <div className="form-group">
-                  <label
-                    htmlFor="inputEmail"
-                    className="col-lg-2 control-label">
-                    Email
-                  </label>
-                  <Col lg={10}>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputEmail"
-                      placeholder="Email"
-                      value={email}
-                      onChange={this.handlesOnEmailChange}
-                    />
-                  </Col>
+          <Col md={4} mdOffset={4} xs={10} xsOffset={1}>
+          <div className={`${styles.ch}`}>
+              <div className={styles.chIcon}><i className="fa fa-user"></i></div>
+                <div className={styles.chContent}>
+                  <input type="text"
+                          className={`form-control ${styles.chInput}`}
+                          id="inputEmail"
+                          placeholder="Email"
+                          value={email}
+                          onChange={this.handlesOnEmailChange}
+                        />
                 </div>
-
-                <div className="form-group">
-                  <label
-                    htmlFor="inputPassword"
-                    className="col-lg-2 control-label">
-                    Password
-                  </label>
-                  <Col lg={10}>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="inputPassword"
-                      placeholder="Password"
-                      value={password}
-                      onChange={this.handlesOnPasswordChange}
-                    />
-                  </Col>
+              </div>
+              <div className={`${styles.ch} m-t-4`}>
+                <div className={styles.chIcon}><i className="fa fa-key"></i></div>
+                <div className={styles.chContent}>
+                  <input
+                        type="password"
+                        className={`form-control ${styles.chInput}`}
+                        id="inputPassword"
+                        placeholder="Password"
+                        value={password}
+                        onChange={this.handlesOnPasswordChange}
+                      />
                 </div>
-
-                <div className="form-group">
-                  <Col
-                    lg={10}
-                    lgOffset={2}
-                  >
-                    <Button
-                      className="login-button btn-block"
-                      bsStyle="primary"
-                      disabled={isLogging}
-                      onClick={this.handlesOnLogin}>
-                      {
-                        isLogging
-                          ?
-                          <span>
-                            login in...
-                            &nbsp;
-                            <i
-                              className="fa fa-spinner fa-pulse fa-fw"
-                            />
-                          </span>
-                          :
-                          <span>
-                            Login
-                          </span>
-                      }
-                    </Button>
-                  </Col>
-                </div>
-              </fieldset>
-            </form>
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            md={4}
-            mdOffset={4}
-            xs={10}
-            xsOffset={1}
-          >
-            <div className="pull-right">
-              <Button
-                bsStyle="info"
-                className="btn-block"
-                onClick={this.goHome}
-              >
-                back to home
-              </Button>
-            </div>
+              </div>
+              <div className="m-t-4">
+                <Button
+                  className="btn btn-info btn-sm btn-block"
+                  bsStyle="primary"
+                  disabled={isLogging}
+                  onClick={this.handlesOnLogin}>
+                  {
+                    isLogging
+                      ?
+                      <span>
+                        login in...
+                        &nbsp;
+                        <i
+                          className="fa fa-spinner fa-pulse fa-fw"
+                        />
+                      </span>
+                      :
+                      <span>
+                        Login
+                      </span>
+                  }
+                </Button>
+              </div>
           </Col>
         </Row>
       </div>
