@@ -37,3 +37,5 @@ client/public/assets/
 client//coverage
 client//.nyc_output
 client/.DS_Store
+
+.idea/
