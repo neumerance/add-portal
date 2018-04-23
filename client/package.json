@@ -131,6 +131,8 @@
     "jquery": "^3.2.1",
     "js-base64": "^2.3.2",
     "jwt-decode": "^2.2.0",
+    "kurento-jsonrpc": "^5.1.4",
+    "kurento-utils": "^6.7.0",
     "lodash": "^4.17.5",
     "moment": "^2.19.2",
     "prop-types": "^15.6.0",

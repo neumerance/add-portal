@@ -7,8 +7,9 @@ const pluralize = require('pluralize');
 const config = require('./config');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+let RoomsController = require('./controllers/rooms_controller.js');
 let UsersController = require('./controllers/users_controller.js');
-let RoomsController = require('./controllers/rooms_controller');
+const ROLES = ['superadmin', 'addpro', 'local', 'viewer'];
 
 const users = [];
 const connections = [];
@@ -56,16 +57,6 @@ apiRoutes.use((req, res, next) => {
 apiRoutes.get('/users', (req, res) => {
   new UsersController(res, req).index();
 });
-
-RoomsController = new RoomsController();
-apiRoutes.post('/rooms/create', (req, res) => {
-  RoomsController.createRoom(req.body.room, () => {
-    RoomsController.getRooms((rooms) => {
-      io.sockets.emit('room#lists', rooms);
-    });
-  });
-});
-
 app.use('/api', apiRoutes);
 
 // =======================
@@ -77,18 +68,43 @@ console.log(`MCGI ADD-PORTAL is running in port ${config.port}`);
 // =======================
 // socket.io =============
 // =======================
+const emitRoomList = () => {
+  RoomsController.getAllRooms((rooms) => {
+    io.emit('broadcast::room#lists', rooms);
+  });
+}
+
 io.sockets.on('connection', (socket) => {
   connections.push(socket);
   console.log('Connected: ', `${connections.length} ${pluralize('client', connections.length)} connected.`);
 
+  // when user left the browser or got disconnected.
   socket.on('disconnect', () => {
     connections.splice(connections.indexOf(socket), 1);
     console.log('Disconnected: ', `${connections.length} ${pluralize('client', connections.length)} connected.`);
   });
 
-  socket.on('room#getLists', () => {
-    RoomsController.getRooms((rooms) => {
-      io.sockets.emit('room#lists', rooms);
+  // when user is creating room
+  socket.on('room#lists', (params) => {
+    RoomsController.getAllRooms((rooms) => {
+      socket.emit('broadcast::room#lists', rooms);
     });
   });
+
+  // when user is creating room
+  socket.on('room#create', (params) => {
+    RoomsController.createRoom(params, (data) => {
+      emitRoomList();
+    });
+  });
+
+  // when user is deleting room
+  socket.on('room#destroy', (params) => {
+    RoomsController.deleteRoom(params, (data) => {
+      emitRoomList();
+    });
+  });
+  
 });
+
+emitRoomList();

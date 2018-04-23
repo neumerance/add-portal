@@ -27,7 +27,7 @@ class Home extends PureComponent {
     super(props);
     this.state = {
       roomSelected: null,
-      rooms: [{ room_description: 'No available rooms at the moment.' }],
+      rooms: [{ name: 'No available rooms at the moment.' }],
       showCreateRoomModal: false
     }
   }
@@ -41,8 +41,8 @@ class Home extends PureComponent {
             <Col md={4} mdOffset={4} xs={12}>
               <Row className="m-t-4">
                 <Col className="text-right" md={12} xs={12}>
-                  <a href="javascript:void(0)"
-                  className="white-text" onClick={this.toggleCreateRoomModal.bind(this)}><i className="fa fa-plus"></i> Create Channel</a>
+                  <button className="btn btn-xs btn-info white-text" onClick={this.toggleCreateRoomModal.bind(this)}><i className="fa fa-plus"></i> Create Channel</button>
+                  <button className="btn btn-xs btn-info white-text" onClick={this.refreshRoomList.bind(this)}><i className="fa fa-refresh"></i> Refresh</button>
                 </Col>
               </Row>
               {this.renderChannels()}
@@ -62,26 +62,47 @@ class Home extends PureComponent {
         <CreateRoomModal
         socket={this.props.socket}
         showModal={this.state.showCreateRoomModal}
-        toggleShowModal={this.toggleCreateRoomModal.bind(this)} />
+        toggleShowModal={this.toggleCreateRoomModal.bind(this)}
+        socket={this.props.socket} />
       </AnimatedView>
     );
   }
 
   componentDidMount() {
-    this.props.socket.socket.emit('room#getLists', {});
-    this.props.socket.socket.on('room#lists', (rooms) => {
-      this.setState({ rooms });
+    this.props.socket.socket.emit('room#lists', {});
+    this.props.socket.socket.on('broadcast::room#lists', (response) => {
+      console.log('rooms: ', response.data);
+      if (response.data) {
+        if (response.data.length) {
+          this.setState({ rooms: response.data });
+        } else {
+          this.setState({ rooms: [{ name: 'No available rooms at the moment.' }] })
+        }
+      }
     });
+  }
+
+  refreshRoomList() {
+    this.props.socket.socket.emit('room#lists', {});
+  }
+
+  destroyRoom(id) {
+    this.props.socket.socket.emit('room#destroy', { roomId: id });
   }
 
   renderChannels() {
     return this.state.rooms.map((room, key) => {
+      console.log('room.data', room.data);
       return(
         <div key={key} className={`${styles.ch} ${room._id === this.state.roomSelected ? styles.chActive : null}`}>
-          { room.name ? <div className={styles.chIcon}><i className="fa fa-users"></i></div> : null }
           <div className={styles.chContent}>
-            { room.name ? <h4 className={styles.chTitle}>{room.name}</h4> : null }
-            <h5 className={styles.chSub}>{room.room_description}</h5>
+          <span className={styles.chTitle}>
+            {room.name}
+            <span className={`pull-right ${room._id ? 'show' : 'hide'}`} onClick={() => { this.destroyRoom(room._id) }}>
+              <i className="fa fa-trash"></i>
+            </span>
+          </span>< br/>
+          <span className={styles.chSub}>{room.data ? room.data.description : null}</span>
           </div>
         </div>
       )

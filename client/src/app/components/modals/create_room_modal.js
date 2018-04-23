@@ -15,10 +15,10 @@ class CreateRoomModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      channel: {
-        name: '',
-        room_description: '',
-        isP2p: false
+      room: {
+        roomName: '',
+        description: '',
+        p2p: false
       }
     }
   }
@@ -30,6 +30,8 @@ class CreateRoomModal extends React.Component {
   }
 
   handleCreateChannel() {
+    this.props.socket.socket.emit('room#create', this.state.room);
+    this.props.toggleShowModal();
   }
 
   render() {
@@ -43,25 +45,25 @@ class CreateRoomModal extends React.Component {
             <ControlLabel>Channel name</ControlLabel>
             <FormControl
               type="text"
-              value={this.state.channel.name}
+              value={this.state.room.roomName}
               placeholder="Enter channel name"
-              onChange={(e) => { this.handleInput(e.target.value, 'channel.name') }}
+              onChange={(e) => { this.handleInput(e.target.value, 'room.roomName') }}
             />
           </FormGroup>
           <FormGroup controlId="channelDescription">
             <ControlLabel>Channel description</ControlLabel>
             <FormControl
               componentClass="textarea"
-              value={this.state.channel.room_description}
+              value={this.state.room.description}
               placeholder="Enter channel description"
-              onChange={(e) => { this.handleInput(e.target.value, 'channel.room_description') }}
+              onChange={(e) => { this.handleInput(e.target.value, 'room.description') }}
             />
           </FormGroup>
           <FormGroup controlId="channelP2pOption">
             <div className="inline-display m-r-5">
               <ToggleButton
-              value={ this.state.channel.isP2p || false }
-              onToggle={(value) => { this.handleInput(!value, 'channel.isP2p') }} />
+              value={ this.state.room.p2p || false }
+              onToggle={(value) => { this.handleInput(!value, 'room.p2p') }} />
             </div>
             <div className="inline-display">
               Channel for 2 person only.
@@ -71,7 +73,7 @@ class CreateRoomModal extends React.Component {
         <Modal.Footer>
           <button
           className="btn btn-info btn-sm"
-          onClick={() => {}}>
+          onClick={this.handleCreateChannel.bind(this)}>
             Save
           </button>
           <button

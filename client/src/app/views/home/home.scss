@@ -68,26 +68,26 @@ body {
   }
 
   .chContent {
-    display: inline-block;
+    color: #38ADD8;
 
     .chTitle {
       margin: 0;
       padding: 0;
-      color: #38ADD8;
       -webkit-transition : color 500ms ease-out;
       -moz-transition : color 500ms ease-out;
       -o-transition : color 500ms ease-out;
       transition : color 500ms ease-out;
+      font-size: 14px;
     }
 
     .chSub {
       margin: 0;
       padding: 0;
-      color: #38ADD8;
       -webkit-transition : color 500ms ease-out;
       -moz-transition : color 500ms ease-out;
       -o-transition : color 500ms ease-out;
       transition : color 500ms ease-out;
+      font-size: 10px;
     }
   }
 }

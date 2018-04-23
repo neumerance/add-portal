@@ -1,53 +1,39 @@
 const N = require('../core/lib/nuve');
-const config = require('../config');
-
-const errorCallback = (msg = '') => {
-  console.log('Error', msg);  
-}
-
-const nullFunc = () => {}
+N.API.init('5adc8d6889a13d91110f0436', '26042', 'http://192.168.0.108:3000/');
+const nullFunc = () => {};
 
 class RoomsController {
-  constructor() {
-    N.API.init(config.serviceId, config.serviceKey, config.serviceEndpoint);
+
+  static createRoom(params, callback = nullFunc) {
+    N.API.createRoom(params.roomName, (roomID) => {
+      callback({ status: 200, data: roomID });
+    }, (e) => {
+      this.errorCallback(e);
+    }, { data: { 
+      description: params.description }, 
+      p2p: params.p2p,
+      mediaConfiguration: (params.mediaConfiguration || 'default')
+    });
   }
 
-  joinRoom() {
+  static deleteRoom(params, callback = nullFunc) {
+    N.API.deleteRoom(params.roomId, () => {
+      callback();
+    }, (e) => {
+      this.errorCallback(e, callback);
+    });    
   }
 
-  getOrCreateRoom() {
-  }
-  
-  getRooms(callback = nullFunc) {
-    console.log('N.API', N.API);
-    N.API.getRooms(function(roomList) {
-      var rooms = JSON.parse(roomList);
-      for(var i in rooms) {
-        console.log('Room ', i, ':', rooms[i].name);
-      }
-      callback(rooms);
-    }, (error) => { errorCallback(`Unable to get all rooms: ${error}`) });
+  static getAllRooms(callback = nullFunc) {
+    N.API.getRooms((roomList) => {
+      const rooms = JSON.parse(roomList);
+      callback({ status: 200, data: rooms });
+    }, (error) => { this.errorCallback(error, callback) });    
   }
 
-  getRoom(roomId) {    
+  errorCallback(error, callback = nullFunc) {
+    callback({ status: 500, error: error, data: null });
   }
 
-  createRoom(params, callback = nullFunc) {
-    this.api.createRoom(
-      params.name, (room) => {
-        callback(room);
-        console.log(`Room ${params.name} with id ${room._id} has been created`);
-      }, 
-      () => { errorCallback(`Failed to create room: ${JSON.stringify(params)}`) }, 
-      { p2p: params.isP2p, data: { description: params.room_description } }
-    );
-  }
-
-  destroyRoom(roomId) {
-  }
-
-  roomExists() {   
-  }
 }
-
 module.exports = RoomsController;

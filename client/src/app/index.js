@@ -12,7 +12,6 @@ import 'font-awesome/css/font-awesome.min.css'; // css is not managed by CSSModu
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './style/index.scss'; // import general styles, mixins etc...
-
 // smoothscroll polyfill
 smoothScrollPolyfill.polyfill();
 // force polyfill (even if browser partially implements it)
