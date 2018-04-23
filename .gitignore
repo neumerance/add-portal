@@ -36,7 +36,7 @@ client/*.log
 client/build/
 client/dist/
 client/coverage
-client//.nyc_output
+client/.nyc_output
 client/.DS_Store
 
 .idea/
