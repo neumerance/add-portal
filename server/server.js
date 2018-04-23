@@ -7,6 +7,7 @@ const pluralize = require('pluralize');
 const config = require('./config');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const jwt = require('jsonwebtoken');
 let RoomsController = require('./controllers/rooms_controller.js');
 let UsersController = require('./controllers/users_controller.js');
 const ROLES = ['superadmin', 'addpro', 'local', 'viewer'];
@@ -19,7 +20,7 @@ const connections = [];
 // =======================
 app.set('superSecret', config.secret); // secret variable
 // use body parser so we can get info from POST and/or URL parameters
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 // use morgan to log requests to the console
 app.use(morgan('dev'));
@@ -34,16 +35,16 @@ app.use(cors());
 // routes ================
 // =======================
 // basic route
-app.get('/', function(req, res){
+app.get('/', function (req, res) {
   res.sendFile(`${__dirname}/index.html`);
 });
 
 // API ROUTES -------------------
-const apiRoutes = express.Router();  
+const apiRoutes = express.Router();
 // route to authenticate a user (POST http://localhost:8080/api/signup)
 apiRoutes.post('/signup', (req, res) => {
   new UsersController(res, req).signup();
-}); 
+});
 // route to authenticate a user (POST http://localhost:8080/api/authenticate)
 apiRoutes.post('/authenticate', (req, res) => {
   new UsersController(res, req, app).authenticate();
@@ -74,7 +75,21 @@ const emitRoomList = () => {
   });
 }
 
-io.sockets.on('connection', (socket) => {
+io.sockets.use((socket, next) => {
+  if (socket.handshake.query) {
+    if (socket.handshake.query.token) {
+      jwt.verify(socket.handshake.query.token, app.get('superSecret'), (err, decoded) => {
+        if (err) return next(new Error('Authentication error'));
+        socket.decoded = decoded;
+        next();
+      });
+    } else {
+      next(new Error('Token is missing'));
+    }
+  } else {
+    next(new Error('Authentication error'));
+  }
+}).on('connection', (socket) => {
   connections.push(socket);
   console.log('Connected: ', `${connections.length} ${pluralize('client', connections.length)} connected.`);
 
@@ -104,7 +119,7 @@ io.sockets.on('connection', (socket) => {
       emitRoomList();
     });
   });
-  
+
 });
 
 emitRoomList();

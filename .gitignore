@@ -5,6 +5,7 @@ client/coverage
 # production
 client/build
 # misc
+client/.idea
 client/.DS_Store
 client/.env.local
 client/.env.development.local
@@ -20,6 +21,7 @@ server/coverage
 # production
 server/build
 # misc
+server/.idea
 server/.DS_Store
 server/.env.local
 server/.env.development.local
@@ -33,8 +35,7 @@ client/.idea/
 client/*.log
 client/build/
 client/dist/
-client/public/assets/
-client//coverage
+client/coverage
 client//.nyc_output
 client/.DS_Store
 

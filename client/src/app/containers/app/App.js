@@ -8,13 +8,14 @@ import navigationModel from '../../config/navigation.json';
 import MainRoutes from '../../routes/MainRoutes';
 import { appConfig } from '../../config/appConfig';
 import styles from './app.scss';
+import auth from '../../services/auth'
 
 class App extends Component {
   state = { navModel: navigationModel };
 
   constructor(props) {
     super(props);
-    this.socket = socket(appConfig.serverHost);
+    this.socket = socket.connect(appConfig.serverHost, { query: { token: auth.getToken() } });
   }
 
   render() {
