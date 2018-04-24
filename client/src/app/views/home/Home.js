@@ -10,6 +10,7 @@ import AnimatedView   from '../../components/animatedView/AnimatedView';
 import { Row, Col }   from 'react-bootstrap';
 import CreateRoomModal from '../../components/modals/create_room_modal';
 import styles         from './home.scss';
+import auth           from '../../services/auth/index';
 
 // IMPORTANT: we need to bind classnames to CSSModule generated classes:
 const cx = classnames.bind(styles);
@@ -80,6 +81,11 @@ class Home extends PureComponent {
         }
       }
     });
+    this.props.socket.socket.on('room#receive::token', (response) => {
+      if (response.data) {
+        console.log('token', response.data);
+      }
+    });
   }
 
   refreshRoomList() {
@@ -91,16 +97,20 @@ class Home extends PureComponent {
   }
 
   renderChannels() {
+    let deleteBtn = null;
     return this.state.rooms.map((room, key) => {
       console.log('room.data', room.data);
+      if (auth.role.isAdmin || auth.role.isAddProNational) {
+        deleteBtn = <span className={`pull-right ${room._id ? 'show' : 'hide'}`} onClick={() => { this.destroyRoom(room._id) }}>
+                      <i className="fa fa-times"></i>
+                    </span>;
+      }
       return(
         <div key={key} className={`${styles.ch} ${room._id === this.state.roomSelected ? styles.chActive : null}`}>
           <div className={styles.chContent}>
-          <span className={styles.chTitle}>
+          {deleteBtn}
+          <span className={styles.chTitle} onClick={ () => { this.joinRoom(room._id) } }>
             {room.name}
-            <span className={`pull-right ${room._id ? 'show' : 'hide'}`} onClick={() => { this.destroyRoom(room._id) }}>
-              <i className="fa fa-trash"></i>
-            </span>
           </span>< br/>
           <span className={styles.chSub}>{room.data ? room.data.description : null}</span>
           </div>
@@ -111,6 +121,19 @@ class Home extends PureComponent {
 
   toggleCreateRoomModal() {
     this.setState({ showCreateRoomModal: !this.state.showCreateRoomModal });
+  }
+
+  joinRoom(roomId) {
+    this.askRoomToken(roomId, auth.getUserInfo());
+  }
+
+  askRoomToken(roomId, userInfo) {
+    console.log('userInfo', userInfo);
+    this.props.socket.socket.emit('room#ask::token', {
+      roomId: roomId,
+      username: (userInfo.username || userInfo.email),
+      role: userInfo.role
+    });
   }
 }
 

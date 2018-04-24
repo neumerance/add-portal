@@ -1,6 +1,7 @@
 const N = require('../core/lib/nuve');
 N.API.init('5adc8d6889a13d91110f0436', '26042', 'http://192.168.0.108:3000/');
 const nullFunc = () => {};
+const ROLES = { 1: 'admin', 2: 'addpro-national', 3: 'addpro-local', 4: 'viewer' };
 
 class RoomsController {
 
@@ -31,7 +32,17 @@ class RoomsController {
     }, (error) => { this.errorCallback(error, callback) });    
   }
 
-  errorCallback(error, callback = nullFunc) {
+  static getRoomToken(params, callback = nullFunc) {
+    N.API.createToken(params.roomId, params.username, ROLES[params.role], (token) => {
+      callback({ status: 200, data: token });
+    }, (error) => { 
+      console.log('error', error);
+      this.errorCallback(error, callback) 
+    });    
+  }
+
+  static errorCallback(error, callback = nullFunc) {
+    console.log('error', error);
     callback({ status: 500, error: error, data: null });
   }
 

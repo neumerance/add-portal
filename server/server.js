@@ -120,6 +120,14 @@ io.sockets.use((socket, next) => {
     });
   });
 
+  // when user is asking for room token
+  socket.on('room#ask::token', (params) => {
+    console.log('room#ask::token', params);
+    RoomsController.getRoomToken(params, (data) => {
+      socket.emit('room#receive::token', data);
+    });
+  });
+
 });
 
 emitRoomList();

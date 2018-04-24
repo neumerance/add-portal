@@ -287,4 +287,30 @@ export const auth = {
   }
 };
 
+const ROLES = { 1: 'admin', 2: 'addpro-national', 3: 'addpro-local', 4: 'viewer' };
+const user = auth.getUserInfo();
+
+const isAdmin = () => {
+  return user.role === 1
+}
+
+const isAddProNational = () => {
+  return user.role === 2
+}
+
+const isAddProLocal = () => {
+  return user.role === 3
+}
+
+const isViewer = () => {
+  return user.role === 4
+}
+
+auth.role = {
+  isAdmin: isAdmin(),
+  isAddProNational: isAddProNational(),
+  isAddProLocal: isAddProLocal(),
+  isViewer: isViewer()
+}
+
 export default auth;

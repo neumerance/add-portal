@@ -77,7 +77,7 @@ class UserService {
           this.res.json({
             success: true,
             message: 'Enjoy your token!',
-            user: { id: user.id, email: user.email },
+            user: { id: user.id, email: user.email, role: user.role },
             token: token
           });
         }   
