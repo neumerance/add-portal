@@ -1,0 +1,19 @@
+.mainScreen {
+  height: 100vh;
+  position: relative;
+}
+
+.participantsPanel {
+  width: 320px;
+  height: 100vh;
+  padding: 20px 0px;
+  position: fixed;
+  top: 0;
+  right: 20px;
+  z-index: 1030;
+
+  .participants {
+    width: 320px;
+    height: 240px;
+  }
+}

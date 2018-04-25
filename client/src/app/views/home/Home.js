@@ -84,6 +84,7 @@ class Home extends PureComponent {
     this.props.socket.socket.on('room#receive::token', (response) => {
       if (response.data) {
         console.log('token', response.data);
+        this.props.history.push(`/conference/${response.data}`);
       }
     });
   }

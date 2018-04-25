@@ -39,6 +39,11 @@ app.get('/', function (req, res) {
   res.sendFile(`${__dirname}/index.html`);
 });
 
+// cdns
+app.get('/cdn/erizo', function (req, res) {
+  res.sendFile(`${__dirname}/erizo.js`);
+});
+
 // API ROUTES -------------------
 const apiRoutes = express.Router();
 // route to authenticate a user (POST http://localhost:8080/api/signup)
