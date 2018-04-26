@@ -1,7 +1,8 @@
 const N = require('../core/lib/nuve');
-N.API.init('5adc8d6889a13d91110f0436', '26042', 'http://192.168.0.108:3000/');
+const config = require('../config');
+N.API.init(config.serviceKey, config.serviceId, config.serviceEndpoint);
 const nullFunc = () => {};
-const ROLES = { 1: 'admin', 2: 'addpro-national', 3: 'addpro-local', 4: 'viewer' };
+const ROLES = { 1: 'admin', 2: 'addpro', 3: 'viewer' };
 
 class RoomsController {
 

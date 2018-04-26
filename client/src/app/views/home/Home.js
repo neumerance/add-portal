@@ -101,7 +101,8 @@ class Home extends PureComponent {
     let deleteBtn = null;
     return this.state.rooms.map((room, key) => {
       console.log('room.data', room.data);
-      if (auth.role.isAdmin || auth.role.isAddProNational) {
+      console.log('auth', auth);
+      if (auth.role.isAdmin) {
         deleteBtn = <span className={`pull-right ${room._id ? 'show' : 'hide'}`} onClick={() => { this.destroyRoom(room._id) }}>
                       <i className="fa fa-times"></i>
                     </span>;

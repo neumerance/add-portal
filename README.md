@@ -15,3 +15,5 @@ https://yarnpkg.com/lang/en/docs/install/
 cd server
 yarn
 
+### generate keys for ssl
+https://www.akadia.com/services/ssh_test_certificate.html

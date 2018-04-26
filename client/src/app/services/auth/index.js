@@ -287,15 +287,14 @@ export const auth = {
   }
 };
 
-const ROLES = { 1: 'admin', 2: 'addpro-national', 3: 'addpro-local', 4: 'viewer' };
+const ROLES = { 1: 'admin', 2: 'addpro', 3: 'viewer' };
 const user = auth.getUserInfo();
 if (user) {
   if (user.role) {
     auth.role = {
       isAdmin: user.role === 1,
-      isAddProNational: user.role === 2,
-      isAddProLocal: user.role === 3,
-      isViewer: user.role === 4
+      isAddPro: user.role === 2,
+      isViewer: user.role === 3
     }
   }
 }

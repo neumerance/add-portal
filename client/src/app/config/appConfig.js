@@ -2,5 +2,5 @@
 
 export const appConfig = {
   DEV_MODE: true,
-  serverHost: 'http://localhost:4000'
+  serverHost: 'https://localhost:4000'
 };

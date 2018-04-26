@@ -1,8 +1,9 @@
 const config = {};
 config.port = 4000;
-config.serviceId = '10284';
-config.serviceKey = '5ab074062ce0a7ec1955ff8e';
-config.serviceEndpoint = 'http://add.server.com:3000/';
+config.https_port = 4001;
+config.serviceId = '15852';
+config.serviceKey = '5ae09eddd2605443928923c2';
+config.serviceEndpoint = 'http://192.168.0.108:3000/';
 config.mysqlHost = 'localhost';
 config.mysqlUsername = 'root';
 config.mysqlPassword = 'abc';

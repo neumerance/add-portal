@@ -1,19 +1,29 @@
 const express = require('express');
 var cors = require('cors');
 const app = express();
-const server = require('http').createServer(app);
-const io = require('socket.io').listen(server);
 const pluralize = require('pluralize');
 const config = require('./config');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 let RoomsController = require('./controllers/rooms_controller.js');
 let UsersController = require('./controllers/users_controller.js');
 const ROLES = ['superadmin', 'addpro', 'local', 'viewer'];
 
 const users = [];
 const connections = [];
+const keysPath = process.env.addKeys || '/usr/local/etc/addkeys/';
+var options = {
+  key: fs.readFileSync(keysPath+'server.key'),
+  cert: fs.readFileSync(keysPath+'server.crt'),
+  requestCert: false,
+  rejectUnauthorized: false
+};
+
+const server = require('https').createServer(options, app);
+// const server = require('http').createServer(app);
+const io = require('socket.io').listen(server);
 
 // =======================
 // configuration =========
