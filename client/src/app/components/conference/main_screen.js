@@ -11,7 +11,7 @@ export default class ConferenceMainScreen extends React.Component {
   }
 
   componentWillMount() {
-    this.localStream = Erizo.Stream({audio: true, video: true, data: false});
+    this.localStream = Erizo.Stream({audio: true, video: true, data: false, attributes: {name: 'jonjon'}});
     this.room = Erizo.Room({token: this.props.roomToken});
   }
 

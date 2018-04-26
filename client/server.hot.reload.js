@@ -11,8 +11,9 @@ const https         = require('https');
 const fs = require('fs');
 const app       = express();
 const compiler  = webpack(config);
+const appConfig = require('./config');
 
-const keysPath = process.env.addKeys || '/usr/local/etc/addkeys/';
+const keysPath = process.env.addKeys || appConfig.keysPath;
 
 var options = {
   key: fs.readFileSync(keysPath+'server.key'),
@@ -33,16 +34,22 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const server = require('https').createServer(options, app);
+let server = null;
+if (appConfig.ssl) {
+  server = require('https').createServer(options, app);
+} else {
+  server = require('http').createServer(app);
+}
 
-server.listen(8000, (err) => {
+const port = appConfig.ssl ? appConfig.https_port : appConfig.http_port
+server.listen(port, (err) => {
   if (err) {
     return console.error(err);
   }
   console.log(
     `
       =====================================================
-      -> Server (${chalk.bgBlue('Hot reload')}) 🏃 (running) on ${chalk.green('localhost')}:${chalk.green('8000')}
+      -> Server (${chalk.bgBlue('Hot reload')}) 🏃 (running) on ${chalk.green(`${appConfig.protocol}://localhost`)}:${chalk.green(`${port}`)}
       =====================================================
     `
   );

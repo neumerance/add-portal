@@ -13,7 +13,7 @@ const ROLES = ['superadmin', 'addpro', 'local', 'viewer'];
 
 const users = [];
 const connections = [];
-const keysPath = process.env.addKeys || '/usr/local/etc/addkeys/';
+const keysPath = process.env.addKeys || config.keysPath;
 var options = {
   key: fs.readFileSync(keysPath+'server.key'),
   cert: fs.readFileSync(keysPath+'server.crt'),
@@ -21,8 +21,12 @@ var options = {
   rejectUnauthorized: false
 };
 
-const server = require('https').createServer(options, app);
-// const server = require('http').createServer(app);
+let server = null;
+if (config.ssl) {
+  server = require('https').createServer(options, app);
+} else {
+  server = require('http').createServer(app);
+}
 const io = require('socket.io').listen(server);
 
 // =======================
@@ -78,8 +82,9 @@ app.use('/api', apiRoutes);
 // =======================
 // start the server ======
 // =======================
-server.listen(process.env.PORT || config.port);
-console.log(`MCGI ADD-PORTAL is running in port ${config.port}`);
+const port = config.ssl ? config.https_port : config.http_port;
+server.listen(process.env.PORT || port);
+console.log(`MCGI ADD-PORTAL is running in port ${port}`);
 
 // =======================
 // socket.io =============

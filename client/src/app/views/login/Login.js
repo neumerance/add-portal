@@ -13,7 +13,7 @@ import {
 }                         from 'react-bootstrap';
 import styles             from '../home/home.scss';
 import auth               from '../../services/auth';
-import { appConfig }      from '../../config/appConfig';
+import appConfig          from '../../../../config';
 import getLocationOrigin  from '../../services/utils/getLocationOrigin';
 import userInfoMock       from '../../mock/userInfo.json';
 // #endregion
@@ -183,7 +183,7 @@ class Login extends PureComponent<Props, State> {
 
   logUser = async (userLogin) => {
     const __SOME_LOGIN_API__ = 'api/authenticate';
-    const url         = `${appConfig.serverHost}/${__SOME_LOGIN_API__}`;
+    const url         = `${appConfig.addServerHost}/${__SOME_LOGIN_API__}`;
     const method      = 'post';
     const headers     = {};
     try {

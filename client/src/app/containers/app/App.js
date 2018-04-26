@@ -6,7 +6,7 @@ import { NavigationBar, BackToTop } from '../../components';
 import socket from 'socket.io-client';
 import navigationModel from '../../config/navigation.json';
 import MainRoutes from '../../routes/MainRoutes';
-import { appConfig } from '../../config/appConfig';
+import appConfig from '../../../../config';
 import styles from './app.scss';
 import auth from '../../services/auth'
 
@@ -15,7 +15,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.socket = socket.connect(appConfig.serverHost, { query: { token: auth.getToken() } });
+    this.socket = socket.connect(appConfig.addServerHost, { query: { token: auth.getToken() } });
   }
 
   render() {
