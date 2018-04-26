@@ -84,7 +84,7 @@ app.use('/api', apiRoutes);
 // =======================
 const port = config.ssl ? config.https_port : config.http_port;
 server.listen(process.env.PORT || port);
-console.log(`MCGI ADD-PORTAL is running in port ${port}`);
+console.log(`MCGI ADD-PORTAL is running in endpoint ${config.protocol}://0.0.0.0:${port}`);
 
 // =======================
 // socket.io =============

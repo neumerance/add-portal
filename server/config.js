@@ -3,6 +3,7 @@ config.port = 4000;
 config.ssl = false;
 config.http_port = 4000;
 config.https_port = 4001;
+config.protocol = (config.ssl ? 'https' : 'http');
 config.serviceId = '15852';
 config.serviceKey = '5ae09eddd2605443928923c2';
 config.serviceEndpoint = 'http://192.168.0.101:3000/';
