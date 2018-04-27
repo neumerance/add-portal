@@ -119,7 +119,7 @@ io.sockets.use((socket, next) => {
     console.log('Disconnected: ', `${connections.length} ${pluralize('client', connections.length)} connected.`);
   });
 
-  // when user is creating room
+  // when user is ask for rooms
   socket.on('room#lists', (params) => {
     RoomsController.getAllRooms((rooms) => {
       socket.emit('broadcast::room#lists', rooms);

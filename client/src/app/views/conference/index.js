@@ -6,7 +6,7 @@ export default class ConferenceIndex extends React.Component {
   render() {
     console.log('props', this.props);
     return(
-      <ConferenceMainScreen token={ this.props.match.params.token } />
+      <ConferenceMainScreen roomToken={ this.props.match.params.token } />
     );
   }
 

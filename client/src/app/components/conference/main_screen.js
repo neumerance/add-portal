@@ -1,5 +1,7 @@
 import React from 'react';
-import styles from './main_screen';
+import styles from './main_screen.scss';
+import auth from '../../services/auth/index';
+const user = auth.getUserInfo();
 
 export default class ConferenceMainScreen extends React.Component {
 
@@ -8,10 +10,7 @@ export default class ConferenceMainScreen extends React.Component {
     this.state = {
       participants: []
     }
-  }
-
-  componentWillMount() {
-    this.localStream = Erizo.Stream({audio: true, video: true, data: false, attributes: {name: 'jonjon'}});
+    this.localStream = Erizo.Stream({audio: true, video: true, data: false, attributes: {name: user.email}});
     this.room = Erizo.Room({token: this.props.roomToken});
   }
 
@@ -25,17 +24,29 @@ export default class ConferenceMainScreen extends React.Component {
       this.whenConnected();
       this.whenSubscribedToStreams();
       this.whenAddedAStream();
-      this.room.connect();
       this.localStream.play("main-screen");
+      setTimeout(() => {
+        this.room.connect();
+      }, 1000);
     });
   }
 
   whenConnected() {
     this.room.addEventListener("room-connected", (roomEvent) => {
+      console.log('AddClient: ', 'You are now connected to the room.');
+      console.log('AddClient: ', this.localStream);
       this.room.publish(this.localStream);
-      this.subscribeToStreams(roomEvent.streams);
+      // this.subscribeToStreams(roomEvent.streams);
     });
   }
+
+  subscribeToStreams(streams = []) {
+    streams.forEach(stream => {
+      if (stream.getID() !== this.localStream.getID()) {
+        this.room.subscribe(stream);
+      }
+    });
+  };
 
   whenSubscribedToStreams() {
     this.room.addEventListener("stream-subscribed", (streamEvent) => {
@@ -52,28 +63,21 @@ export default class ConferenceMainScreen extends React.Component {
 
   whenAddedAStream() {
     this.room.addEventListener("stream-added", (streamEvent) => {
-      const streams = [];
-      streams.push(streamEvent.stream);
-      this.subscribeToStreams(streams);
+      console.log('AddClient: ', 'Stream added');
+      // const streams = [];
+      // streams.push(streamEvent.stream);
+      // this.subscribeToStreams(streams);
     });
   }
 
-  whenAStreamIsRemoved() {
-    this.room.addEventListener("stream-removed", (streamEvent) => {
-      const stream = streamEvent.stream;
-      if (stream.elementID !== undefined) {
+  // whenAStreamIsRemoved() {
+  //   this.room.addEventListener("stream-removed", (streamEvent) => {
+  //     const stream = streamEvent.stream;
+  //     if (stream.elementID !== undefined) {
 
-      }
-    });
-  }
-
-  subscribeToStreams(streams = []) {
-    streams.forEach(stream => {
-      if (stream.getID() !== this.localStream.getID()) {
-        this.room.subscribe(stream);
-      }
-    });
-  };
+  //     }
+  //   });
+  // }
 
   renderParticipants() {
     return this.state.participants.map((participant, key) => {
