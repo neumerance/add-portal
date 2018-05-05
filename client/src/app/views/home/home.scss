@@ -5,7 +5,7 @@ html, body {
 
 body {
   background: url('../../../../public/assets/images/skybg-min.jpg') no-repeat top center;
-  background-size: 100%;
+  background-size: cover;
 }
 
 :global .row {
