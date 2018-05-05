@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './main_screen.scss';
 import auth from '../../services/auth/index';
 import ConferenceParticipants from './participants';
+import * as _ from 'lodash';
 const user = auth.getUserInfo();
 
 export default class ConferenceMainScreen extends React.Component {
@@ -40,6 +41,16 @@ export default class ConferenceMainScreen extends React.Component {
           self.room.subscribe(streamEvent.stream);
         });
 
+        self.room.addEventListener("stream-removed", (streamEvent) => {
+          const id = streamEvent.stream.getID();
+          const streamEvents = this.state.streamEvents;
+          const index = _.findIndex(streamEvents, (streamEvent) => { return streamEvent.stream.getID() === id });
+          if (index) {
+            streamEvents.pullAt(index);
+            this.setState({ streamEvents });
+          }
+        });
+
         self.room.connect();
       }, 1000);
     });
@@ -71,8 +82,10 @@ export default class ConferenceMainScreen extends React.Component {
   render() {
     return(
       <div>
-        <ConferenceParticipants />
         <div id="main-screen" className={styles.mainScreen}>
+        </div>
+        <div className={styles.participantsPanel}>
+          {this.renderParticipants()}
         </div>
       </div>
     );
