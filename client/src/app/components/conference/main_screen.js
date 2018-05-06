@@ -44,9 +44,11 @@ export default class ConferenceMainScreen extends React.Component {
         self.room.addEventListener("stream-removed", (streamEvent) => {
           const id = streamEvent.stream.getID();
           const streamEvents = this.state.streamEvents;
-          const index = _.findIndex(streamEvents, (streamEvent) => { return streamEvent.stream.getID() === id });
-          if (index) {
-            streamEvents.pullAt(index);
+          const index = _.findIndex(streamEvents, (strmEvnt) => { return strmEvnt.stream.getID() === id });
+          console.log('id', id);
+          console.log('index', index);
+          if (index >= 0) {
+            _.pullAt(streamEvents, [index]);
             this.setState({ streamEvents });
           }
         });
