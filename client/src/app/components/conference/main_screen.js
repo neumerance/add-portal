@@ -12,7 +12,7 @@ export default class ConferenceMainScreen extends React.Component {
     this.state = {
       streamEvents: []
     }
-    this.localStream = Erizo.Stream({audio: true, video: true, data: false, attributes: {name: user.email}});
+    this.localStream = Erizo.Stream({audio: false, video: true, data: false, attributes: {name: user.email}});
     this.room = Erizo.Room({token: this.props.roomToken});
   }
 
@@ -65,28 +65,12 @@ export default class ConferenceMainScreen extends React.Component {
     }
   }
 
-  renderParticipants() {
-    return this.state.streamEvents.map((streamEvent, key) => {
-      setTimeout(() => {
-        streamEvent.stream.play(`participant-${streamEvent.stream.getID()}`);
-      }, 1000);
-      return(
-        <div id={`participant-${streamEvent.stream.getID()}`}
-             key={key}
-             className={styles.participants}>
-        </div>
-      );
-    });
-  }
-
   render() {
     return(
-      <div>
+      <div id="conference">
         <div id="main-screen" className={styles.mainScreen}>
         </div>
-        <div className={styles.participantsPanel}>
-          {this.renderParticipants()}
-        </div>
+        <ConferenceParticipants streamEvents={this.state.streamEvents} localStream={this.localStream} />
       </div>
     );
   }

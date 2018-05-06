@@ -12,6 +12,7 @@ import {
   Button
 }                         from 'react-bootstrap';
 import styles             from '../home/home.scss';
+import loginStyles        from './login.scss';
 import auth               from '../../services/auth';
 import appConfig          from '../../../../config';
 import getLocationOrigin  from '../../services/utils/getLocationOrigin';
@@ -60,7 +61,7 @@ class Login extends PureComponent<Props, State> {
     } = this.state;
 
     return (
-      <div className="m-t-10-percent">
+      <div className={loginStyles.login}>
         <Row>
           <Col md={4} mdOffset={4} xs={10} xsOffset={1}>
           <div className={`${styles.ch}`}>

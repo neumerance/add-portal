@@ -36,35 +36,37 @@ class Home extends PureComponent {
   render() {
     return(
       <AnimatedView>
-        <div className="m-t-10-percent">
-          <h2 className="text-center white-text">Channel Selection</h2>
-          <Row>
-            <Col md={4} mdOffset={4} xs={12}>
-              <Row className="m-t-4">
-                <Col className="text-right" md={12} xs={12}>
-                  <button className="btn btn-xs btn-info white-text" onClick={this.toggleCreateRoomModal.bind(this)}><i className="fa fa-plus"></i> Create Channel</button>
-                  <button className="btn btn-xs btn-info white-text" onClick={this.refreshRoomList.bind(this)}><i className="fa fa-refresh"></i> Refresh</button>
-                </Col>
-              </Row>
-              {this.renderChannels()}
-              <div className="m-t-4">
-                <Col className="p-0" md={6} xs={6}>
-                  <button className="btn btn-info btn-sm btn-block">JOIN</button>
-                </Col>
-                <Col className="p-0" md={6} xs={6}>
-                  <Link to="/login">
-                   <button className="btn btn-default btn-sm btn-block">LOG OUT</button>
-                  </Link>
-                </Col>
-              </div>
-            </Col>
-          </Row>
+        <div className={styles.channelPage}>
+          <div>
+            <h2 className="text-center white-text">Channel Selection</h2>
+            <Row>
+              <Col md={4} mdOffset={4} xs={12}>
+                <Row className="m-t-4">
+                  <Col className="text-right" md={12} xs={12}>
+                    <button className="btn btn-xs btn-info white-text" onClick={this.toggleCreateRoomModal.bind(this)}><i className="fa fa-plus"></i> Create Channel</button>
+                    <button className="btn btn-xs btn-info white-text" onClick={this.refreshRoomList.bind(this)}><i className="fa fa-refresh"></i> Refresh</button>
+                  </Col>
+                </Row>
+                {this.renderChannels()}
+                <div className="m-t-4">
+                  <Col className="p-0" md={6} xs={6}>
+                    <button className="btn btn-info btn-sm btn-block">JOIN</button>
+                  </Col>
+                  <Col className="p-0" md={6} xs={6}>
+                    <Link to="/login">
+                    <button className="btn btn-default btn-sm btn-block">LOG OUT</button>
+                    </Link>
+                  </Col>
+                </div>
+              </Col>
+            </Row>
+          </div>
+          <CreateRoomModal
+          socket={this.props.socket}
+          showModal={this.state.showCreateRoomModal}
+          toggleShowModal={this.toggleCreateRoomModal.bind(this)}
+          socket={this.props.socket} />
         </div>
-        <CreateRoomModal
-        socket={this.props.socket}
-        showModal={this.state.showCreateRoomModal}
-        toggleShowModal={this.toggleCreateRoomModal.bind(this)}
-        socket={this.props.socket} />
       </AnimatedView>
     );
   }
@@ -100,24 +102,28 @@ class Home extends PureComponent {
   renderChannels() {
     let deleteBtn = null;
     return this.state.rooms.map((room, key) => {
-      console.log('room.data', room.data);
-      console.log('auth', auth);
-      if (auth.role.isAdmin) {
-        deleteBtn = <span className={`pull-right ${room._id ? 'show' : 'hide'}`} onClick={() => { this.destroyRoom(room._id) }}>
-                      <i className="fa fa-times"></i>
-                    </span>;
+      if (auth) {
+        if (auth.role) {
+          if (auth.role.isAdmin) {
+            deleteBtn = <span className={`pull-right ${room._id ? 'show' : 'hide'}`} onClick={() => { this.destroyRoom(room._id) }}>
+                          <i className="fa fa-times"></i>
+                        </span>;
+          }
+          return(
+            <div key={key} className={`${styles.ch} ${room._id === this.state.roomSelected ? styles.chActive : null}`}>
+              <div className={styles.chContent}>
+              {deleteBtn}
+              <span className={styles.chTitle} onClick={ () => { this.joinRoom(room._id) } }>
+                {room.name}
+              </span>< br/>
+              <span className={styles.chSub}>{room.data ? room.data.description : null}</span>
+              </div>
+            </div>
+          )
+        }
+      } else {
+        return null
       }
-      return(
-        <div key={key} className={`${styles.ch} ${room._id === this.state.roomSelected ? styles.chActive : null}`}>
-          <div className={styles.chContent}>
-          {deleteBtn}
-          <span className={styles.chTitle} onClick={ () => { this.joinRoom(room._id) } }>
-            {room.name}
-          </span>< br/>
-          <span className={styles.chSub}>{room.data ? room.data.description : null}</span>
-          </div>
-        </div>
-      )
     });
   }
 
