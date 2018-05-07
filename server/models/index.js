@@ -30,6 +30,9 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
+db.users.hasOne(db.userLocals);
+db.userLocals.belongsTo(db.users);
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

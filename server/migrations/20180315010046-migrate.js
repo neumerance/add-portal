@@ -1,6 +1,8 @@
 'use strict';
 
-module.exports = {
+const UserLocal = require('./20180507010551-user_local');
+
+const User = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('users', { 
       id: {
@@ -37,3 +39,4 @@ module.exports = {
     return queryInterface.dropTable('users');
   }
 };
+module.exports = User;

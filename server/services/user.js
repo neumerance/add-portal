@@ -63,8 +63,10 @@ class UserService {
     db.users.findOne({
       where: {
         email: this.req.body.email
-      }
+      },
+      include: [ { model: db.userLocals } ]
     }).then((user) => {
+      console.log('user', user);
       if (!user) {
         this.res.json({ success: false, message: 'Authentication failed. User not found.' });
       } else if (user) {
@@ -77,7 +79,12 @@ class UserService {
           this.res.json({
             success: true,
             message: 'Enjoy your token!',
-            user: { id: user.id, email: user.email, role: user.role },
+            user: { 
+              id: user.id, 
+              email: user.email, 
+              role: user.role,
+              local: user.user_local 
+            },
             token: token
           });
         }   
@@ -109,6 +116,7 @@ class UserService {
   }
   
   respondWithException(error) {
+    console.log('error', error);
     this.res.status(500).send({ 
       success: false, 
       message: 'something went wrong',

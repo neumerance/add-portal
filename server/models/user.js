@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+const User = (sequelize, DataTypes) => {
   return sequelize.define('users', {
     id: {
       type: DataTypes.BIGINT,
@@ -28,11 +28,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      defaultValue: DataTypes.NOW
     }
   });
 }
+
+module.exports = User;
