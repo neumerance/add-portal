@@ -64,7 +64,11 @@ class UserService {
       where: {
         email: this.req.body.email
       },
-      include: [ { model: db.userLocals } ]
+      include: [ 
+        { 
+          model: db.userLocals
+        } 
+      ]
     }).then((user) => {
       if (!user) {
         this.res.json({ success: false, message: 'Authentication failed. User not found.' });
@@ -102,7 +106,7 @@ class UserService {
         if (err) {
           return res.json({ success: false, message: 'Failed to authenticate token.' });    
         } else {
-          this.req.decoded = decoded;    
+          this.req.decoded = decoded;   
           this.next();
         }
       });

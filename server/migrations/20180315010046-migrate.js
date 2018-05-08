@@ -10,6 +10,9 @@ const User = {
         primaryKey: true,
         autoIncrement: true
       },
+      userLocalId: {
+        type: Sequelize.BIGINT
+      },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -23,6 +26,18 @@ const User = {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 1
+      },
+      firstname: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      lastname: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      status: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1 // 0 - suspended, 1 - active
       },
       createdAt: {
         type: Sequelize.DATE,

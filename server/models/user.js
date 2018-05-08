@@ -5,6 +5,9 @@ const User = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
+    userLocalId: {
+      type: DataTypes.BIGINT
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -20,6 +23,18 @@ const User = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    firstname: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastname: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    status: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1 // 0 - suspended, 1 - active
     },
     role: {
       type: DataTypes.INTEGER,

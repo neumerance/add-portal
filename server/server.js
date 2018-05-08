@@ -7,10 +7,11 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const UserSocketService = require('./services/socketService/user');
 let RoomsController = require('./controllers/rooms_controller.js');
 let UsersController = require('./controllers/users_controller.js');
-const ROLES = ['superadmin', 'addpro', 'local', 'viewer'];
 
+const ROLES = ['admin', 'addpro', 'viewer'];
 const users = [];
 const connections = [];
 const keysPath = process.env.addKeys || config.keysPath;
@@ -145,6 +146,33 @@ io.sockets.use((socket, next) => {
     console.log('room#ask::token', params);
     RoomsController.getRoomToken(params, (data) => {
       socket.emit('room#receive::token', data);
+    });
+  });
+
+  socket.on('admin#ask::user#lists', (_params) => {
+    console.log('admin#ask::user#lists');
+    UserSocketService.index((resp) => {
+      if (resp.status == 200) {
+        socket.emit('user#lists', resp.data);
+      } else {
+        console.log(_resp)
+      }
+    });
+  }); 
+
+  socket.on('admin#ask::user#creation', (params) => {
+    UserSocketService.create(params, (resp) => {
+      if (resp.status == 200) {
+        UserSocketService.index((_resp) => {
+          if (_resp.status == 200) {
+            socket.emit('broadcast::user#lists', _resp.data);
+          } else {
+            console.log(_resp)
+          }
+        });
+      } else {
+        console.log(resp);
+      }
     });
   });
 

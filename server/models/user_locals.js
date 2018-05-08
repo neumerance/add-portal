@@ -5,9 +5,6 @@ const UserLocal = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    userId: {
-      type: DataTypes.BIGINT
-    },
     district: {
       type: DataTypes.STRING,
       allowNull: false
@@ -24,9 +21,9 @@ const UserLocal = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    suspend: {
+    deleted: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      defaultValue: false
     },
     createdAt: {
       type: DataTypes.DATE,

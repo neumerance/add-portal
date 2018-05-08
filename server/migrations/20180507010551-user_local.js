@@ -1,7 +1,5 @@
 'use strict';
 
-const User = require('./20180315010046-migrate');
-
 const UserLocal = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('userLocals', {
@@ -9,9 +7,6 @@ const UserLocal = {
         type: Sequelize.BIGINT,
         primaryKey: true,
         autoIncrement: true
-      },
-      userId: {
-        type: Sequelize.BIGINT
       },
       district: {
         type: Sequelize.STRING,
@@ -29,9 +24,9 @@ const UserLocal = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      suspend: {
+      deleted: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        defaultValue: false
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -45,7 +40,7 @@ const UserLocal = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('user_locals');
+    return queryInterface.dropTable('userLocals');
   }
 };
 
