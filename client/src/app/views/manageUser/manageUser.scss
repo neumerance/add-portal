@@ -1,0 +1,31 @@
+.manageUser {
+  padding-top: 10%;
+}
+
+:global #managingTabs {
+  .nav-tabs {
+    border-bottom: 1px solid #38ADD8;
+  }
+
+  .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    border: 1px solid #38ADD8;
+    border-bottom-color: transparent;
+    background: #38ADD8;
+    color: #FFFFFF;
+  }
+
+  .nav-tabs>li>a {
+    border-bottom-color: #38ADD8;
+  }
+
+  .tab-container {
+    border: 1px solid #38ADD8;
+    border-top: 0px;
+    border-left: 10px solid #38ADD8;
+    padding: 10px;
+  }
+
+  .table {
+    color: #38ADD8;
+  }
+}

@@ -66,7 +66,6 @@ class UserService {
       },
       include: [ { model: db.userLocals } ]
     }).then((user) => {
-      console.log('user', user);
       if (!user) {
         this.res.json({ success: false, message: 'Authentication failed. User not found.' });
       } else if (user) {
@@ -83,7 +82,7 @@ class UserService {
               id: user.id, 
               email: user.email, 
               role: user.role,
-              local: user.user_local 
+              local: user.userLocal 
             },
             token: token
           });

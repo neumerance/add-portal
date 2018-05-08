@@ -12,6 +12,14 @@ html, body {
   padding: 0px !important;
 }
 
+:global .m-10 {
+  margin: 10px;
+}
+
+:global .m-20 {
+  margin: 20px;
+}
+
 #global .licode_subbar {
   display: none !important;
 }

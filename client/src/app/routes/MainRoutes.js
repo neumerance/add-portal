@@ -10,6 +10,7 @@ import About        from '../views/about/About';
 import Protected    from '../views/protected/Protected';
 import PrivateRoute from '../components/privateRoute/PrivateRoute';
 import ConferenceMainScreen from '../views/conference/index';
+import ManageUser   from '../views/manageUser/manageUser';
 
 const MainRoutes = (socket) => {
   return (
@@ -17,6 +18,7 @@ const MainRoutes = (socket) => {
       <PrivateRoute exact path="/" socket={socket} component={Home} />
       <PrivateRoute path="/about" socket={socket} component={About} />
       <PrivateRoute path="/conference/:token" socket={socket} component={ConferenceMainScreen} />
+      <PrivateRoute path="/manage-user" socket={socket} component={ManageUser} />
       <PrivateRoute path="/protected" component={Protected} />
     </Switch>
   );

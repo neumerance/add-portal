@@ -36,28 +36,21 @@ class Home extends PureComponent {
   render() {
     return(
       <AnimatedView>
+        <Link to="/login">
+          <button id="logout-btn" className="btn btn-default btn-xs pull-right m-20">LOG OUT</button>
+        </Link>
         <div className={styles.channelPage}>
           <div>
             <h2 className="text-center white-text">Channel Selection</h2>
             <Row>
               <Col md={4} mdOffset={4} xs={12}>
-                <Row className="m-t-4">
-                  <Col className="text-right" md={12} xs={12}>
-                    <button className="btn btn-xs btn-info white-text" onClick={this.toggleCreateRoomModal.bind(this)}><i className="fa fa-plus"></i> Create Channel</button>
-                    <button className="btn btn-xs btn-info white-text" onClick={this.refreshRoomList.bind(this)}><i className="fa fa-refresh"></i> Refresh</button>
-                  </Col>
-                </Row>
-                {this.renderChannels()}
-                <div className="m-t-4">
-                  <Col className="p-0" md={6} xs={6}>
-                    <button className="btn btn-info btn-sm btn-block">JOIN</button>
-                  </Col>
-                  <Col className="p-0" md={6} xs={6}>
-                    <Link to="/login">
-                    <button className="btn btn-default btn-sm btn-block">LOG OUT</button>
-                    </Link>
-                  </Col>
+                <div>
+                <Link to="/manage-user">
+                  <button className="btn btn-xs btn-info white-text">Manage users</button>
+                </Link>
+                  <button className="btn btn-xs btn-info white-text" onClick={this.toggleCreateRoomModal.bind(this)}><i className="fa fa-plus"></i> Create Channel</button>
                 </div>
+                {this.renderChannels()}
               </Col>
             </Row>
           </div>
@@ -122,7 +115,7 @@ class Home extends PureComponent {
           )
         }
       } else {
-        return null
+        return this.renderChannels();
       }
     });
   }
