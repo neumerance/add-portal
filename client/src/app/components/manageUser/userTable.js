@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table }   from 'react-bootstrap';
+// import * as _ from 'lodash';
 
 export default class ManageUserTable extends React.Component {
 
@@ -24,7 +25,7 @@ export default class ManageUserTable extends React.Component {
   renderRows() {
     return this.state.users.map((user, key) => {
       return(
-        <tr key={key}>
+        <tr key={`userTable-${key}`}>
           <td>{user.id}</td>
           <td>{user.email}</td>
           <td>{user.firstname}</td>

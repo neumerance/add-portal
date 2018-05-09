@@ -3,7 +3,7 @@ const ErrorHandler = require('./errorHandler');
 const SuccessHandler = require('./successHandler');
 const nullFunc = () => {};
 
-class UserSocketService {
+class UserLocalSocketService {
 
   constructor(socket) {
     this.socket = socket;
@@ -13,18 +13,18 @@ class UserSocketService {
   }
 
   init() {
-    this.socket.on('admin#ask::user#lists', (_params) => {
+    this.socket.on('admin#ask::userLocal#lists', (_params) => {
       this.index((resp) => {
-        if (resp.status == 200) { this.socket.emit('user#lists', resp.data) }
+        if (resp.status == 200) { this.socket.emit('userLocal#lists', resp.data) }
       });
     }); 
 
-    this.socket.on('admin#ask::user#creation', (params) => {
+    this.socket.on('admin#ask::userLocal#creation', (params) => {
       this.create(params, (resp) => {
         if (resp.status == 200) {
           this.index((_resp) => {
             if (_resp.status == 200) {
-              this.socket.emit('broadcast::user#lists', _resp.data);
+              this.socket.emit('broadcast::userLocal#lists', _resp.data);
             }
           });
         }
@@ -33,13 +33,7 @@ class UserSocketService {
   }
 
   index(callback = nullFunc) {
-    db.users.findAll({
-      include: [
-        {
-          model: db.userLocals
-        }
-      ]
-    }).then((resp) => {
+    db.userLocals.findAll({}).then((resp) => {
       this.successHandler.handleSuccess(resp, callback);
     }).catch((error) => {
       this.errorHandler.handleError(error, callback);
@@ -47,8 +41,8 @@ class UserSocketService {
   }
 
   create(params, callback = nullFunc) {
-    db.users.create(params).then((resp) => {
-      resp.message = 'User has been created'
+    db.userLocals.create(params).then((resp) => {
+      resp.message = 'Local has been created'
       this.successHandler.handleSuccess(resp, callback);
     }).catch((error) => {
       this.errorHandler.handleError(error, callback);
@@ -57,4 +51,4 @@ class UserSocketService {
 
 }
 
-module.exports = UserSocketService;
+module.exports = UserLocalSocketService;
