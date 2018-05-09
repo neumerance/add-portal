@@ -5,6 +5,6 @@ config.http_port = 8000;
 config.https_port = 8001;
 config.protocol = (config.ssl ? 'https' : 'http');
 config.addServerPort = (config.ssl ? '4001' : '4000');
-config.addServerIp = '192.168.0.111';
+config.addServerIp = '0.0.0.0';
 config.addServerHost = `${config.protocol}://${config.addServerIp}:${config.addServerPort}`;
 module.exports = config;

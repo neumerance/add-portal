@@ -20,6 +20,10 @@ html, body {
   margin: 20px;
 }
 
+:global .m-b-10 {
+  margin-bottom: 10px;
+}
+
 #global .licode_subbar {
   display: none !important;
 }
