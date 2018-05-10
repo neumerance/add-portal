@@ -13,7 +13,6 @@ export default class ManageUserLocalTable extends React.Component {
 
   componentDidMount() {
     this.props.socket.socket.emit('admin#ask::userLocal#lists');
-    console.log('admin#ask::userLocal#lists');
     this.props.socket.socket.on('userLocal#lists', (resp) => {
       this.setState({ locals: resp });
     });
