@@ -9,6 +9,8 @@ import MainRoutes from '../../routes/MainRoutes';
 import appConfig from '../../../../config';
 import styles from './app.scss';
 import auth from '../../services/auth'
+import NotificationSystem  from 'react-notification-system';
+
 
 class App extends Component {
   state = { navModel: navigationModel };
@@ -16,6 +18,23 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.socket = socket.connect(appConfig.addServerHost, { query: { token: auth.getToken() } });
+    this._notificationSystem = null
+  }
+
+  componentDidMount() {
+    this._notificationSystem = this.refs.notificationSystem;
+    this.socket.on('success#message', (resp) => {
+      this._notificationSystem.addNotification({
+        message: resp,
+        level: 'success'
+      });
+    });
+    this.socket.on('error#message', (resp) => {
+      this._notificationSystem.addNotification({
+        message: resp,
+        level: 'error'
+      });
+    });
   }
 
   render() {
@@ -30,6 +49,7 @@ class App extends Component {
           minScrollY={40}
           scrollTo={'appContainer'}
         />
+        <NotificationSystem ref="notificationSystem" />
       </div>
     );
   }

@@ -140,6 +140,7 @@
     "react-bootstrap": "^0.31.5",
     "react-dom": "^16.2.0",
     "react-motion": "^0.5.2",
+    "react-notification-system": "^0.2.17",
     "react-overdrive": "^0.0.9",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
