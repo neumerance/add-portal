@@ -6813,6 +6813,13 @@ react-bootstrap@^0.31.5:
     uncontrollable "^4.1.0"
     warning "^3.0.0"
 
+react-confirm-bootstrap@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/react-confirm-bootstrap/-/react-confirm-bootstrap-5.2.1.tgz#3daaadac1fddd17c201ac0e86f7fb897d5813d08"
+  dependencies:
+    prop-types "^15.6.0"
+    react-bootstrap "^0.31.5"
+
 react-deep-force-update@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-2.1.1.tgz#8ea4263cd6455a050b37445b3f08fd839d86e909"

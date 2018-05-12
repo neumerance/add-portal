@@ -62,7 +62,8 @@ class UserService {
   authenticate() {
     db.users.findOne({
       where: {
-        email: this.req.body.email
+        email: this.req.body.email,
+        status: 1
       },
       include: [ 
         { 

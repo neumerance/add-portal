@@ -32,8 +32,19 @@ class UserSocketService {
     });
 
     this.socket.on('admin#ask::user#update', (params) => {
-      console.log('admin#ask::user#update');
       this.update(params, (resp) => {
+        if (resp.status == 200) {
+          this.index((_resp) => {
+            if (_resp.status == 200) {
+              this.socket.emit('broadcast::user#lists', _resp.data);
+            }
+          });
+        }
+      });
+    });
+
+    this.socket.on('admin#ask::user#destroy', (params) => {
+      this.destroy(params, (resp) => {
         if (resp.status == 200) {
           this.index((_resp) => {
             if (_resp.status == 200) {
@@ -47,6 +58,9 @@ class UserSocketService {
 
   index(callback = nullFunc) {
     db.users.findAll({
+      where: {
+        status: 1
+      },
       include: [
         {
           model: db.userLocals
@@ -74,6 +88,11 @@ class UserSocketService {
     }).catch((error) => {
       this.errorHandler.handleError(error, callback);
     });
+  }
+
+  destroy(params, callback = nullFunc) {
+    params.status = 0;
+    this.update(params, callback);
   }
 
 }

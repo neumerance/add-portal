@@ -34,7 +34,7 @@ const User = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.INTEGER,
-      defaultValue: 1 // 0 - suspended, 1 - active
+      defaultValue: 1 // 0 - deleted, 1 - active
     },
     role: {
       type: DataTypes.INTEGER,

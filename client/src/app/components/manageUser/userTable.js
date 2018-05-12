@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table }   from 'react-bootstrap';
 import ManageUserUpdateModal from './updateUserModal';
+import Confirm  from 'react-confirm-bootstrap';
 import * as _ from 'lodash';
 
 const ROLES = ['', 'Admin', 'AddPro', 'Viewer'];
@@ -18,7 +19,6 @@ export default class ManageUserTable extends React.Component {
 
   componentDidMount() {
     this.props.socket.socket.emit('admin#ask::user#lists');
-    console.log('admin#ask::user#lists');
     this.props.socket.socket.on('user#lists', (resp) => {
       this.setState({ users: resp });
     });
@@ -43,6 +43,10 @@ export default class ManageUserTable extends React.Component {
     });
   }
 
+  confirmUserDelete(params) {
+    this.props.socket.socket.emit('admin#ask::user#destroy', params);
+  }
+
   renderRows() {
     return this.state.users.map((user, key) => {
       return(
@@ -58,6 +62,14 @@ export default class ManageUserTable extends React.Component {
             <button className="btn btn-xs btn-info" onClick={() => { this.setSelectedUser(user) }}>
               <i className="fa fa-pencil"></i>
             </button>
+            <Confirm onConfirm={() => { this.confirmUserDelete(user) }}
+                     body="Are you sure you want to delete this user?"
+                     confirmText="Confirm Delete"
+                     title={`Deleting ${user.email}`}>
+                    <button className="btn btn-xs btn-default">
+                      <i className="fa fa-trash"></i>
+                    </button>
+            </Confirm>
           </td>
         </tr>
       )
