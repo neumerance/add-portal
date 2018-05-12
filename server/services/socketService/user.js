@@ -30,6 +30,19 @@ class UserSocketService {
         }
       });
     });
+
+    this.socket.on('admin#ask::user#update', (params) => {
+      console.log('admin#ask::user#update');
+      this.update(params, (resp) => {
+        if (resp.status == 200) {
+          this.index((_resp) => {
+            if (_resp.status == 200) {
+              this.socket.emit('broadcast::user#lists', _resp.data);
+            }
+          });
+        }
+      });
+    });
   }
 
   index(callback = nullFunc) {
@@ -50,6 +63,14 @@ class UserSocketService {
     db.users.create(params).then((resp) => {
       resp.message = 'User has been created'
       this.successHandler.handleSuccess(resp, callback);
+    }).catch((error) => {
+      this.errorHandler.handleError(error, callback);
+    });
+  }
+
+  update(params, callback = nullFunc) {
+    db.users.update(params, { where: { id: params.id } }).then((resp) => {
+      this.successHandler.handleSuccess({ message: 'User has been updated' }, callback);
     }).catch((error) => {
       this.errorHandler.handleError(error, callback);
     });
