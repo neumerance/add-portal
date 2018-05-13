@@ -17,7 +17,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.socket = socket.connect(appConfig.addServerHost, { query: { token: auth.getToken() } });
+    this.socket = socket.connect(appConfig.addServerHost, { query: { token: auth.getToken() }, secure: true });
     this._notificationSystem = null
   }
 
