@@ -1,5 +1,5 @@
 import React from 'react';
-import ConferenceMainScreen from '../../components/conference/main_screen';
+import ConferenceMainScreen from '../../components/conference/mainScreen';
 
 export default class ConferenceIndex extends React.Component {
 

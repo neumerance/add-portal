@@ -1,7 +1,8 @@
 import React from 'react';
-import styles from './main_screen.scss';
+import styles from './mainScreen.scss';
 import auth from '../../services/auth/index';
 import ConferenceParticipants from './participants';
+import StreamDisplay from './streamDisplay';
 import * as _ from 'lodash';
 const user = auth.getUserInfo();
 
@@ -10,7 +11,8 @@ export default class ConferenceMainScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      streamEvents: []
+      streamEvents: [],
+      localStream: null
     }
     this.localStream = Erizo.Stream({audio: false, video: true, data: false, attributes: {name: user.email}});
     this.room = Erizo.Room({token: this.props.roomToken});
@@ -24,7 +26,7 @@ export default class ConferenceMainScreen extends React.Component {
   init() {
     const self = this;
     self.localStream.addEventListener("access-accepted", () => {
-      self.localStream.play("main-screen");
+      self.setState({ localStream: this.localStream });
       setTimeout(() => {
         self.room.addEventListener("room-connected", function (roomEvent) {
           self.room.publish(self.localStream);
@@ -67,10 +69,18 @@ export default class ConferenceMainScreen extends React.Component {
     }
   }
 
+  renderLocalStream() {
+    if (!this.state.localStream) { return null }
+    return(
+      <StreamDisplay stream={this.state.localStream} />
+    );
+  }
+
   render() {
     return(
       <div id="conference">
-        <div id="main-screen" className={styles.mainScreen}>
+        <div className={styles.mainScreen}>
+          {this.renderLocalStream()}
         </div>
         <ConferenceParticipants streamEvents={this.state.streamEvents} localStream={this.localStream} />
       </div>
