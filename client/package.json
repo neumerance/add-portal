@@ -143,6 +143,7 @@
     "react-motion": "^0.5.2",
     "react-notification-system": "^0.2.17",
     "react-overdrive": "^0.0.9",
+    "react-responsive-carousel": "^3.1.37",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-slick": "^0.23.1",

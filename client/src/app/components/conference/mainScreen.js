@@ -1,10 +1,8 @@
 import React from 'react';
 import styles from './mainScreen.scss';
-import auth from '../../services/auth/index';
 import ConferenceParticipants from './participants';
 import StreamDisplay from './streamDisplay';
 import * as _ from 'lodash';
-const user = auth.getUserInfo();
 
 export default class ConferenceMainScreen extends React.Component {
 
@@ -14,7 +12,7 @@ export default class ConferenceMainScreen extends React.Component {
       streamEvents: [],
       localStream: null
     }
-    this.localStream = Erizo.Stream({audio: false, video: true, data: false, attributes: {name: user.email}});
+    this.localStream = Erizo.Stream({audio: false, video: true, data: false, attributes: {user: this.props.user} });
     this.room = Erizo.Room({token: this.props.roomToken});
   }
 

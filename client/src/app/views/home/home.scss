@@ -24,6 +24,31 @@ html, body {
   margin-bottom: 10px;
 }
 
+:global .white-text {
+  color: #FFFFFF;
+}
+:global .font1vw {
+  font-size: 1vw;
+}
+:global .font-point8vw {
+  font-size: .8vw;
+}
+:global .font-point6vw {
+  font-size: .6vw;
+}
+
+:global .relative {
+  position: relative;
+}
+
+:global .fixed {
+  position: fixed;
+}
+
+:global .absolute {
+  position: absolute;
+}
+
 #global .licode_subbar {
   display: none !important;
 }

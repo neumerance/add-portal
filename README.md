@@ -17,3 +17,6 @@ yarn
 
 ### generate keys for ssl
 https://www.akadia.com/services/ssh_test_certificate.html
+
+### deploying licode
+http://nginx.org/en/docs/http/server_names.html

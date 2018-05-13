@@ -1,13 +1,29 @@
 import React from 'react';
 import ConferenceMainScreen from '../../components/conference/mainScreen';
+import styles from './index.scss';
+import auth from '../../services/auth/index';
 
 export default class ConferenceIndex extends React.Component {
 
+  renderMainScreen() {
+    const user = this.getUser();
+    if (user) {
+      return <ConferenceMainScreen roomToken={ this.props.match.params.token } user={user} />;
+    } else {
+      return this.renderMainScreen();
+    }
+  }
+
   render() {
-    console.log('props', this.props);
     return(
-      <ConferenceMainScreen roomToken={ this.props.match.params.token } />
+      <div className={styles.conference}>
+        { this.renderMainScreen() }
+      </div>
     );
+  }
+
+  getUser() {
+    return auth.getUserInfo();
   }
 
 }

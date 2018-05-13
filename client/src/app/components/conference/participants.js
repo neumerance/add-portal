@@ -1,6 +1,6 @@
 import React from 'react';
+import { Carousel } from 'react-bootstrap';
 import styles from './participants.scss';
-import Slider from "react-slick";
 import StreamDisplay from './streamDisplay';
 
 export default class ConferenceParticipants extends React.Component {
@@ -9,34 +9,22 @@ export default class ConferenceParticipants extends React.Component {
     return this.props.streamEvents.map((streamEvent, key) => {
       if (this.props.localStream.getID() !== streamEvent.stream.getID()) {
         return(
-          <div className={styles.participants}>
-            <StreamDisplay stream={streamEvent.stream} />
-          </div>
+          <Carousel.Item key={`streams-${key}`}>
+            <div className={styles.participants}>
+              <StreamDisplay stream={streamEvent.stream} />
+            </div>
+          </Carousel.Item>
         );
       }
     });
   }
 
   render() {
-    const settings = this.settings();
     return (
-      <div className={styles.participants}>
-        <Slider {...settings}>
-          {this.renderParticipants()}
-        </Slider>
-      </div>
+      <Carousel pauseOnHover={false} interval={3000}>
+        {this.renderParticipants()}
+      </Carousel>
     );
-  }
-
-  settings() {
-    return {
-      dots: false,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay: true
-    };
   }
 
 }
