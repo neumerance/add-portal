@@ -11,7 +11,7 @@ export default class ConferenceParticipants extends React.Component {
         return(
           <Carousel.Item key={`streams-${key}`}>
             <div className={styles.participants}>
-              <StreamDisplay stream={streamEvent.stream} />
+              <StreamDisplay stream={streamEvent.stream} label />
             </div>
           </Carousel.Item>
         );

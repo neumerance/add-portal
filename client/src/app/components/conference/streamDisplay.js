@@ -25,13 +25,20 @@ export default class StreamDisplay extends React.Component {
     }, 1000);
   }
 
+  renderLabel() {
+    if (!this.props.label) return null;
+    return(
+      <div className={`text-right absolute ${styles.header}`}>
+        <label className={`white-text float-right font-4vh blackToTransparent ${styles.labels}`}>{_.get(this.state.user, 'local.local')}, {_.get(this.state.user, 'local.city')}</label><br />
+        <label className={`white-text float-right font-3vh blackToTransparent ${styles.labels}`}>{_.get(this.state.user, 'local.district')}</label>
+      </div>
+    );
+  }
+
   render() {
     return(
       <div className={`${styles.streamDisplay} relative`}>
-        <div className={`text-right absolute ${styles.header}`}>
-          <div className="white-text font1vw">{_.get(this.state.user, 'local.local')}, {_.get(this.state.user, 'local.city')}</div>
-          <div className="white-text font-point8vw">{_.get(this.state.user, 'local.district')}</div>
-        </div>
+        {this.renderLabel()}
         <div id={`stream-${this.props.stream.getID()}`}
            className={styles.streamDisplay}>
         </div>
