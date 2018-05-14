@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './mainScreen.scss';
 import ConferenceParticipants from './participants';
 import StreamDisplay from './streamDisplay';
+import ConferenceChatBox from './chatbox';
 import * as _ from 'lodash';
 
 export default class ConferenceMainScreen extends React.Component {
@@ -10,9 +11,9 @@ export default class ConferenceMainScreen extends React.Component {
     super(props);
     this.state = {
       streamEvents: [],
-      localStream: null
+      streamMessages: []
     }
-    this.localStream = Erizo.Stream({audio: false, video: true, data: false, attributes: {user: this.props.user} });
+    this.localStream = Erizo.Stream({audio: false, video: true, data: true, attributes: {user: this.props.user} });
     this.room = Erizo.Room({token: this.props.roomToken});
   }
 
@@ -24,7 +25,6 @@ export default class ConferenceMainScreen extends React.Component {
   init() {
     const self = this;
     self.localStream.addEventListener("access-accepted", () => {
-      self.setState({ localStream: this.localStream });
       setTimeout(() => {
         self.room.addEventListener("room-connected", function (roomEvent) {
           self.room.publish(self.localStream);
@@ -35,6 +35,7 @@ export default class ConferenceMainScreen extends React.Component {
           const streamEvents = this.state.streamEvents;
           streamEvents.push(streamEvent);
           self.setState({ streamEvents });
+          this.subscribeToStreamData(streamEvent);
         });
 
         self.room.addEventListener("stream-added", (streamEvent) => {
@@ -45,8 +46,6 @@ export default class ConferenceMainScreen extends React.Component {
           const id = streamEvent.stream.getID();
           const streamEvents = this.state.streamEvents;
           const index = _.findIndex(streamEvents, (strmEvnt) => { return strmEvnt.stream.getID() === id });
-          console.log('id', id);
-          console.log('index', index);
           if (index >= 0) {
             _.pullAt(streamEvents, [index]);
             this.setState({ streamEvents });
@@ -67,20 +66,35 @@ export default class ConferenceMainScreen extends React.Component {
     }
   }
 
+  subscribeToStreamData(streamEvent) {
+    const self = this;
+    streamEvent.stream.addEventListener("stream-data", (evt) => {
+      console.log('evt', evt.msg);
+      const streamMessages = this.state.streamMessages;
+      streamMessages.push(evt.msg);
+      self.setState({ streamMessages });
+    });
+  }
+
   renderLocalStream() {
-    if (!this.state.localStream) { return null }
+    if (!this.localStream) { return null }
     return(
-      <StreamDisplay stream={this.state.localStream} />
+      <StreamDisplay stream={this.localStream} />
     );
   }
 
   render() {
+    const self = this;
     return(
-      <div id="conference">
+      <div id="conference relative">
         <div className={styles.mainScreen}>
           {this.renderLocalStream()}
         </div>
-        <ConferenceParticipants streamEvents={this.state.streamEvents} localStream={this.localStream} />
+        <ConferenceParticipants streamEvents={this.state.streamEvents}
+                                localStream={self.localStream} />
+        <ConferenceChatBox user={this.props.user}
+                           streamMessages={self.state.streamMessages}
+                           localStream={self.localStream}  />
       </div>
     );
   }

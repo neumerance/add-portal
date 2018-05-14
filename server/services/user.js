@@ -86,6 +86,8 @@ class UserService {
             user: { 
               id: user.id, 
               email: user.email, 
+              firstname: user.firstname,
+              lastname: user.lastname,
               role: user.role,
               local: user.userLocal 
             },

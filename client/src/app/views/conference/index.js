@@ -8,7 +8,9 @@ export default class ConferenceIndex extends React.Component {
   renderMainScreen() {
     const user = this.getUser();
     if (user) {
-      return <ConferenceMainScreen roomToken={ this.props.match.params.token } user={user} />;
+      return <ConferenceMainScreen socket={this.props.socket}
+                                   roomToken={ this.props.match.params.token }
+                                   user={user} />;
     } else {
       return this.renderMainScreen();
     }

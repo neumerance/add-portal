@@ -19,12 +19,17 @@ export default class ConferenceParticipants extends React.Component {
     });
   }
 
-  render() {
-    return (
+  renderCarousel() {
+    // if (!(this.props.streamEvents > 0)) return '<div></div>';
+    return(
       <Carousel pauseOnHover={false} interval={3000}>
         {this.renderParticipants()}
       </Carousel>
     );
+  }
+
+  render() {
+    return this.renderCarousel();
   }
 
 }
