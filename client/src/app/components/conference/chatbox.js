@@ -27,6 +27,10 @@ export default class ConferenceChatBox extends React.Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.scrollToBottom();
+  }
+
   render() {
     return(
       <div className={styles.chatbox}>
@@ -46,13 +50,12 @@ export default class ConferenceChatBox extends React.Component {
   }
 
   scrollToBottom() {
-    $("#chatContainer").animate({ scrollTop: $('#chatContainer').prop("scrollHeight")}, 1000);
+    $("#chatContainer").animate({ scrollTop: $('#chatContainer').prop("scrollHeight")}, 500);
   }
 
   sendData() {
     if (!this.state.text) { return }
     this.props.localStream.sendData({ text: this.state.text, user: this.props.user });
-    this.scrollToBottom();
     this.setState({ text: null }, () => {
       this.refs.text.value = '';
     });

@@ -11,7 +11,8 @@ export default class ConferenceMainScreen extends React.Component {
     super(props);
     this.state = {
       streamEvents: [],
-      streamMessages: []
+      streamMessages: [],
+      deviceAccepted: false
     }
     this.localStream = Erizo.Stream({audio: false, video: true, data: true, attributes: {user: this.props.user} });
     this.room = Erizo.Room({token: this.props.roomToken});
@@ -26,6 +27,8 @@ export default class ConferenceMainScreen extends React.Component {
     const self = this;
     self.localStream.addEventListener("access-accepted", () => {
       setTimeout(() => {
+        this.setState({ deviceAccepted: true });
+
         self.room.addEventListener("room-connected", function (roomEvent) {
           self.room.publish(self.localStream);
           self.subscribeToStreams(roomEvent.streams);
@@ -77,7 +80,8 @@ export default class ConferenceMainScreen extends React.Component {
   }
 
   renderLocalStream() {
-    if (!this.localStream) { return null }
+    if (!this.localStream || !this.state.deviceAccepted) { return null }
+    console.log('deviseAccepted?', this.state.deviceAccepted);
     return(
       <StreamDisplay stream={this.localStream} />
     );
