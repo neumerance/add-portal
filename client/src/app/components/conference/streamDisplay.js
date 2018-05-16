@@ -22,7 +22,7 @@ export default class StreamDisplay extends React.Component {
       if (user) {
         this.setState({ user: user.user });
       }
-    }, 2000);
+    }, 3000);
   }
 
   renderLabel() {
